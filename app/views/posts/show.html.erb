@@ -1,2 +1,24 @@
-<h1>Posts#show</h1>
-<p>Find me in app/views/posts/show.html.erb</p>
+<div class="container">
+  <h3 class="my-4"><%= @post.title %></h3>
+
+  <div class="card">
+    <div class="card-body">
+      <p><strong>投稿者:</strong> <%= @post.user.name %></p>
+      <p><strong>墓所:</strong> <%= @post.grave.name %></p>
+      <p><strong>投稿日時:</strong> <%= l @post.created_at, format: :long %></p>
+      <hr>
+      <p><%= simple_format(@post.body) %></p>
+    </div>
+    
+    <%# 投稿者本人である場合のみ編集・削除ボタンを表示 %>
+    <% if @post.user == current_user %>
+      <div class="card-footer">
+        <%= link_to "編集する", edit_post_path(@post), class: "btn btn-success" %>
+        <%# data-turbo-confirm で確認ダイアログを表示 %>
+        <%= link_to "削除する", post_path(@post), method: :delete, data: { "turbo-method": :delete, "turbo-confirm": "本当に削除しますか？" }, class: "btn btn-danger" %>
+      </div>
+    <% end %>
+  </div>
+  
+  <%# コメント機能などはここに追記 %>
+</div>

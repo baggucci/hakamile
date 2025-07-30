@@ -1,0 +1,4 @@
+class Grave < ApplicationRecord
+
+
+end

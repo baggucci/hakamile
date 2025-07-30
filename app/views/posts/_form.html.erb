@@ -1,0 +1,40 @@
+
+<%# エラーメッセージ表示エリア %>
+<% if post.errors.any? %>
+  <div class="alert alert-danger">
+    <h5><%= post.errors.count %>件のエラーが発生しました:</h5>
+    <ul>
+      <% post.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+
+
+<%= form_with model: @post, local: true do |f| %>
+  <div class="form-group">
+    <%= f.label :grave_id, "墓所" %>
+    <%# collection_select(オブジェクト名, プロパティ名, 選択肢の配列, value属性のカラム, text表示のカラム) %>
+    <%= f.collection_select :grave_id, Grave.all, :id, :name, { prompt: "選択してください" }, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :title, "タイトル" %>
+    <%= f.text_field :title, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :body, "本文" %>
+    <%= f.text_area :body, rows: 8, class: "form-control" %>
+  </div>
+  
+  <div class="form-group">
+    <%= f.label :status, "公開ステータス" %>
+    <%= f.select :status, Post.statuses_i18n.invert, {}, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.submit class: "btn btn-primary" %>
+  </div>
+<% end %>
