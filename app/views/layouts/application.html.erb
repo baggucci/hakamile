@@ -11,6 +11,29 @@
   </head>
 
   <body>
+    <header>
+      <nav>
+        <%= link_to "Hakamile", root_path %>
+        <ul>
+
+          <% if user_signed_in? %>
+            <%= button_to "サインアウト", destroy_user_session_path, method: :delete %>
+          <% else %>       
+            <li><%= link_to "新規登録", new_user_registration_path %></li>
+            <li><%= link_to "サインイン", new_user_session_path %></li>
+          <% end %>
+            <li><%= link_to "About", about_path %></li>
+        </ul>
+      </nav>
+    </header>
+
+    <% if notice %>
+      <p class="alert alert-success"><%= notice %></p>
+    <% end %>
+    <% if alert %>
+      <p class="alert alert-danger"><%= alert %></p>
+    <% end %>
+
     <%= yield %>
   </body>
 </html>

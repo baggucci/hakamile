@@ -1,0 +1,20 @@
+<h1>投稿一覧</h1>
+
+<% if @posts.present? %>
+  <ul>
+    <% @posts.each do |post| %>
+      <li>
+        <h2><%= link_to post.title, post_path(post) %></h2>
+        <p><%= post.body.truncate(100) %></p> <%# 投稿本文の冒頭100文字を表示 %>
+        <p>投稿者: <%= post.user.name %></p> <%# 投稿者の名前を表示（Userモデルにnameカラムがあるとして） %>
+        <%# 必要に応じて他の情報（作成日時など）も表示 %>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>まだ投稿はありません。</p>
+<% end %>
+
+<% if flash.now[:alert] %>
+  <p class="alert alert-danger"><%= flash.now[:alert] %></p>
+<% end %>
