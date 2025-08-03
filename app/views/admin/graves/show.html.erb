@@ -1,0 +1,22 @@
+<!-- app/views/admin/graves/show.html.erb -->
+<!-- 墓所詳細ページ -->
+<div class="container">
+  <h3 class="my-4">墓所詳細</h3>
+  <div class="card">
+    <div class="card-header">
+      <%= @grave.name %>
+    </div>
+    <div class="card-body">
+      <p><strong>説明:</strong><br><%= simple_format(@grave.description) %></p>
+      <p><strong>都道府県:</strong> <%= @grave.prefecture %></p>
+      <p><strong>住所:</strong> <%= @grave.address %></p>
+      <p><strong>緯度:</strong> <%= @grave.latitude %></p>
+      <p><strong>経度:</strong> <%= @grave.longitude %></p>
+<!--      <p><strong>ジャンル:</strong> <%= @grave.genres.map(&:name).join(', ') %></p> -->
+    </div>
+    <div class="card-footer">
+      <%= link_to "編集する", edit_admin_grave_path(@grave), class: "btn btn-success" %>
+      <%= link_to "一覧へ戻る", admin_graves_path, class: "btn btn-secondary" %>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,9 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  grave: one
+  genre: one
+
+two:
+  grave: two
+  genre: two

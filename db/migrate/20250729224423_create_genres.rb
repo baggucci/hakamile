@@ -5,5 +5,8 @@ class CreateGenres < ActiveRecord::Migration[6.1]
 
       t.timestamps
     end
+        # ジャンル名は重複しないようにユニーク制約を追加
+        add_index :genres, :name, unique: true
+
   end
 end
