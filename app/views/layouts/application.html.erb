@@ -23,7 +23,15 @@
             <li><%= link_to "サインイン", new_user_session_path %></li>
           <% end %>
             <li><%= link_to "About", about_path %></li>
+            <li><a href="/graves">お墓リスト</a></li>
+            <li><a href="/mypage">MY PAGE</a></li>
         </ul>
+        <div class="header-search">
+        <form action="/search" method="get" id="search-form">
+            <input type="text" name="query" placeholder="キーワードで検索..." class="search-input">
+            <button type="submit" class="search-button">検索</button>
+        </form>
+        </div>
       </nav>
     </header>
 

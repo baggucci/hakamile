@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'graves/index'
+  get 'graves/show'
 # devise_for :admins #ここは削除
   devise_for :admin, skip: [:registrations, :password], controllers: {
     sessions: 'admin/sessions'
@@ -8,6 +10,8 @@ Rails.application.routes.draw do
   get 'about' => 'homes#about'
   devise_for :users
   resources :posts
+  resources :graves, only: [:index, :show,]  # 墓所管理
+
 
    # --- ここからマイページ関連のルートを追加 ---
    get 'mypage' => 'users#mypage'
