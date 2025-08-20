@@ -1,6 +1,6 @@
 class PostsController < ApplicationController
   # edit, update, destroyアクションの前に、対象の投稿データを取得し、本人確認を行う
-  before_action :set_post, only: [:show, :edit, :update, :destroy, :new]
+  before_action :set_post, only: [:show, :edit, :update, :destroy]
   before_action :ensure_correct_user, only: [:edit, :update, :destroy] # 編集・更新・削除権限の確認
   before_action :authenticate_user!
 

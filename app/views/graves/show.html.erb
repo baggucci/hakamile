@@ -1,2 +1,25 @@
-<h1>Graves#show</h1>
-<p>Find me in app/views/graves/show.html.erb</p>
+<h1><%= @grave.name %> の詳細</h1>
+
+<p><strong>人名:</strong> <%= @grave.name %></p>
+<p><strong>所在地都道府県:</strong> <%= @grave.prefecture %></p>
+<p><strong>住所:</strong> <%= @grave.address %></p>
+<p><strong>説明文:</strong> <%= @grave.description %></p>
+
+<hr>
+
+<h3>位置情報</h3>
+<p><strong>緯度:</strong> <%= @grave.latitude %></p>
+<p><strong>経度:</strong> <%= @grave.longitude %></p>
+
+<hr>
+
+<h3>地図</h3>
+<div id="map" style="height: 400px; width: 100%;" 
+     data-latitude="<%= @grave.latitude %>" 
+     data-longitude="<%= @grave.longitude %>"></div>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['GOOGLE_MAPS_API_KEY'] %>&callback=initMap" async defer></script>
+
+<hr>
+
+<%= link_to '一覧に戻る', graves_path %>
