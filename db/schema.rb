@@ -10,13 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2025_08_20_235828) do
+ActiveRecord::Schema.define(version: 2025_08_03_134810) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
-    t.integer "record_id", null: false
-    t.integer "blob_id", null: false
+    t.bigint "record_id", null: false
+    t.bigint "blob_id", null: false
     t.datetime "created_at", null: false
     t.index ["blob_id"], name: "index_active_storage_attachments_on_blob_id"
     t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
@@ -35,7 +35,7 @@ ActiveRecord::Schema.define(version: 2025_08_20_235828) do
   end
 
   create_table "active_storage_variant_records", force: :cascade do |t|
-    t.integer "blob_id", null: false
+    t.bigint "blob_id", null: false
     t.string "variation_digest", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
@@ -56,11 +56,12 @@ ActiveRecord::Schema.define(version: 2025_08_20_235828) do
     t.string "name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["name"], name: "index_genres_on_name", unique: true
   end
 
   create_table "grave_genres", force: :cascade do |t|
     t.integer "grave_id", null: false
-    t.bigint "genre_id", null: false
+    t.integer "genre_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["genre_id"], name: "index_grave_genres_on_genre_id"
@@ -68,12 +69,12 @@ ActiveRecord::Schema.define(version: 2025_08_20_235828) do
   end
 
   create_table "graves", force: :cascade do |t|
-    t.string "name"
-    t.string "address"
-    t.float "latitude"
-    t.float "longitude"
-    t.text "description"
-    t.string "prefecture"
+    t.string "name", null: false
+    t.string "address", null: false
+    t.float "latitude", null: false
+    t.float "longitude", null: false
+    t.text "description", null: false
+    t.string "prefecture", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
