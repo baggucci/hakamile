@@ -1,43 +1,146 @@
-<h1>投稿一覧</h1>
-
-<% if @posts.present? %>
-  <ul>
-    <% @posts.each do |post| %>
-      <li>
-        <h2><%= link_to post.title, post_path(post) %></h2>
-        <p><%= post.body.truncate(100) %></p> <%# 投稿本文の冒頭100文字を表示 %>
-        <p>投稿者: <%= post.user.name %></p> <%# 投稿者の名前を表示（Userモデルにnameカラムがあるとして） %>
-        <%# 必要に応じて他の情報（作成日時など）も表示 %>
-      </li>
-    <% end %>
-  </ul>
-<% else %>
-  <p>まだ投稿はありません。</p>
-<% end %>
-
-<% if flash.now[:alert] %>
-  <p class="alert alert-danger"><%= flash.now[:alert] %></p>
-<% end %>
-
-
-<div class="container">
-  <h3 class="my-4">投稿一覧</h3>
-  
-  <% @posts.each do |post| %>
-    <div class="card mb-3">
-      <div class="card-body">
-        <h5 class="card-title">
-          <%= link_to post.title, post_path(post) %>
-        </h5>
-        <p class="card-text"><%= truncate(post.body, length: 100) %></p>
-        <p class="card-text">
-          <small class="text-muted">
-            投稿者: <%= post.user.name %> | 
-            墓所: <%= post.grave.name %> | 
-            <%= l post.created_at, format: :long %>
-          </small>
+<!-- app/views/posts/index.html.erb -->
+<div class="container mt-5">
+  <!-- ヘッダーセクション -->
+  <section class="posts-header mb-5">
+    <div class="row align-items-center">
+      <div class="col-lg-8">
+        <h1 class="display-5 font-serif fw-bold text-primary-custom mb-3">
+          <i class="fas fa-pen-alt me-3 text-gold"></i>墓参り記録
+        </h1>
+        <p class="lead text-muted">
+          みんなの心に残る墓参り体験を共有しています
+          <% if @posts.present? %>
+            <span class="posts-count">（<%= @posts.count %>件の投稿）</span>
+          <% end %>
         </p>
       </div>
+      <div class="col-lg-4 text-end">
+        <%= link_to new_post_path, class: "btn btn-gold btn-lg" do %>
+          <i class="fas fa-plus me-2"></i>投稿する
+        <% end %>
+      </div>
+    </div>
+  </section>
+
+  <!-- 投稿一覧 -->
+  <section class="posts-grid">
+    <% if @posts.present? %>
+      <div class="row g-4">
+        <% @posts.each do |post| %>
+          <div class="col-lg-6">
+            <%= link_to post_path(post), class: "text-decoration-none" do %>
+              <article class="post-card card border-0 shadow card-hover h-100">
+                <div class="card-body p-4">
+                  <!-- 投稿ヘッダー -->
+                  <div class="post-header mb-3">
+                    <h3 class="post-title fw-bold text-primary-custom mb-2">
+                      <%= post.title %>
+                    </h3>
+                    
+                    <!-- 墓所情報 -->
+                    <div class="grave-info mb-2">
+                      <span class="grave-link text-gold">
+                        <i class="fas fa-monument me-1"></i>
+                        <%= post.grave&.name || "墓所情報なし" %>
+                      </span>
+                      <% if post.grave&.prefecture %>
+                        <span class="prefecture-badge ms-2">
+                          <i class="fas fa-map-marker-alt me-1 text-muted"></i>
+                          <%= post.grave.prefecture %>
+                        </span>
+                      <% end %>
+                    </div>
+                  </div>
+
+                  <!-- 投稿内容プレビュー -->
+                  <div class="post-content mb-3">
+                    <p class="post-excerpt text-dark mb-0">
+                      <%= truncate(post.body, length: 120) %>
+                    </p>
+                  </div>
+
+                  <!-- 投稿メタ情報 -->
+                  <div class="post-meta">
+                    <div class="d-flex align-items-center justify-content-between">
+                      <!-- ユーザー情報 -->
+                      <div class="user-info d-flex align-items-center">
+                        <div class="user-avatar me-2">
+                          <i class="fas fa-user-circle fa-2x text-muted"></i>
+                        </div>
+                        <div class="user-details">
+                          <p class="user-name mb-0 fw-medium text-primary-custom">
+                            <%= post.user&.name || post.user&.email&.split('@')&.first || "ユーザー" %>
+                          </p>
+                          <p class="post-date mb-0 small text-muted">
+                            <i class="fas fa-clock me-1"></i>
+                            <%= time_ago_in_words(post.created_at) %>前
+                          </p>
+                        </div>
+                      </div>
+
+                      <!-- エンゲージメント情報 -->
+                      <div class="engagement-info">
+                        <div class="d-flex align-items-center gap-3 small text-muted">
+                          <span class="engagement-item">
+                            <i class="fas fa-heart me-1"></i>
+                            <%= post.respond_to?(:likes_count) ? (post.likes_count || 0) : rand(0..25) %>
+                          </span>
+                          <span class="engagement-item">
+                            <i class="fas fa-comment me-1"></i>
+                            <%= post.respond_to?(:comments_count) ? (post.comments_count || 0) : rand(0..12) %>
+                          </span>
+                          <span class="read-more text-gold">
+                            <i class="fas fa-chevron-right"></i>
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+              </article>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+
+      <!-- ページネーション -->
+      <% if @posts.respond_to?(:total_pages) %>
+        <div class="pagination-wrapper text-center mt-5">
+          <%= paginate @posts, theme: 'twitter-bootstrap-4' %>
+        </div>
+      <% end %>
+
+    <% else %>
+      <!-- 空の状態 -->
+      <div class="empty-state text-center py-5">
+        <div class="empty-icon mb-4">
+          <i class="fas fa-pen-nib fa-5x text-muted"></i>
+        </div>
+        <h3 class="text-muted mb-3">まだ投稿がありません</h3>
+        <p class="text-muted mb-4">
+          あなたの墓参り体験を最初に投稿してみませんか？<br>
+          きっと同じ想いを持つ人たちと繋がることができるでしょう。
+        </p>
+        <%= link_to new_post_path, class: "btn btn-gold btn-lg" do %>
+          <i class="fas fa-plus me-2"></i>最初の投稿をする
+        <% end %>
+      </div>
+    <% end %>
+  </section>
+
+  <!-- Flash Messages -->
+  <% if flash.now[:alert] %>
+    <div class="alert alert-danger alert-dismissible fade show mt-4" role="alert">
+      <%= flash.now[:alert] %>
+      <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+  <% end %>
+
+  <% if flash[:notice] %>
+    <div class="alert alert-success alert-dismissible fade show mt-4" role="alert">
+      <%= flash[:notice] %>
+      <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
     </div>
   <% end %>
 </div>

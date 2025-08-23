@@ -13,3 +13,23 @@
  *= require_tree .
  *= require_self
  */
+
+.card-hover {
+    transition: var(--transition-normal);
+}
+.card-hover:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-medium) !important;
+}
+
+.gold-left-border {
+    border-left: 4px solid var(--soft-gold) !important;
+}
+
+.profile-avatar {
+    width: 100px;
+    height: 100px;
+    background-color: var(--warm-gray);
+    border: 3px solid var(--soft-gold);
+}
+ 
