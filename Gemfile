@@ -67,3 +67,8 @@ end
 gem "net-smtp"
 gem "net-pop"
 gem "net-imap"
+
+# Gemfile
+gem 'image_processing', '~> 1.2' # 画像処理用
+gem 'geocoder' # 位置情報検索用
+gem 'kaminari' # ページネーション用

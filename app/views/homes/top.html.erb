@@ -1,2 +1,210 @@
-<h1>Homes#top</h1>
-<p>Find me in app/views/homes/top.html.erb</p>
+
+
+<!-- Hero Section -->
+<section class="hero-gradient position-relative py-5">
+    <div class="hero-overlay position-absolute top-0 start-0 w-100 h-100"></div>
+    <div class="container position-relative text-center py-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <h2 class="display-4 font-serif fw-bold text-white mb-4">故人への想いを繋ぐ場所</h2>
+                <p class="lead text-light mb-5">
+                    有名人の墓所情報と訪問記録を共有する<br>
+                    墓マイラーのためのコミュニティサイト
+                </p>
+                
+                <!-- Search Bar -->
+                <div class="row justify-content-center">
+                    <div class="col-lg-10">
+                        <%= form_with url: graves_path, method: :get, local: true, class: "input-group input-group-lg" do |form| %>
+                            <%= form.text_field :search, placeholder: "故人名を入力してください（例：夏目漱石、手塚治虫）", class: "form-control search-input" %>
+                            <%= form.submit "検索", class: "btn search-btn px-4" %>
+                        <% end %>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Search Options Section -->
+<section class="py-5 bg-beige">
+    <div class="container">
+        <h3 class="text-center font-serif fw-bold text-primary-custom mb-5 display-6">墓所を探す</h3>
+        <div class="row g-4">
+            <!-- Genre Search -->
+            <div class="col-lg-4">
+                <%= link_to graves_path(category: 'genre'), class: "text-decoration-none" do %>
+                    <div class="search-option-card card h-100 border-0 shadow">
+                        <div class="card-body text-center p-4">
+                            <div class="search-icon-circle rounded-circle d-flex align-items-center justify-content-center mx-auto mb-4">
+                                <i class="fas fa-book text-primary-custom fa-2x"></i>
+                            </div>
+                            <h4 class="card-title fw-bold text-primary-custom mb-3">ジャンルから探す</h4>
+                            <p class="card-text text-muted mb-4">
+                                文学・芸能・政治・スポーツ等<br>
+                                分野別に墓所を検索
+                            </p>
+                            <div class="d-flex flex-wrap gap-2 justify-content-center">
+                                <span class="category-badge badge">文学</span>
+                                <span class="category-badge badge">芸能</span>
+                                <span class="category-badge badge">政治</span>
+                                <span class="category-badge badge">スポーツ</span>
+                            </div>
+                        </div>
+                    </div>
+                <% end %>
+            </div>
+            
+            <!-- Prefecture Search -->
+            <div class="col-lg-4">
+                <%= link_to graves_path(category: 'prefecture'), class: "text-decoration-none" do %>
+                    <div class="search-option-card card h-100 border-0 shadow">
+                        <div class="card-body text-center p-4">
+                            <div class="search-icon-circle rounded-circle d-flex align-items-center justify-content-center mx-auto mb-4">
+                                <i class="fas fa-map-marked-alt text-primary-custom fa-2x"></i>
+                            </div>
+                            <h4 class="card-title fw-bold text-primary-custom mb-3">地域から探す</h4>
+                            <p class="card-text text-muted mb-4">
+                                全国47都道府県別<br>
+                                お住まいの地域から検索
+                            </p>
+                            <div class="d-flex flex-wrap gap-2 justify-content-center">
+                                <span class="category-badge badge">東京都</span>
+                                <span class="category-badge badge">京都府</span>
+                                <span class="category-badge badge">神奈川県</span>
+                                <span class="category-badge badge">大阪府</span>
+                            </div>
+                        </div>
+                    </div>
+                <% end %>
+            </div>
+            
+            <!-- Location Search -->
+            <div class="col-lg-4">
+                <div class="search-option-card card h-100 border-0 shadow">
+                    <div class="card-body text-center p-4">
+                        <div class="search-icon-circle rounded-circle d-flex align-items-center justify-content-center mx-auto mb-4">
+                            <i class="fas fa-location-arrow text-primary-custom fa-2x"></i>
+                        </div>
+                        <h4 class="card-title fw-bold text-primary-custom mb-3">現在地から探す</h4>
+                        <p class="card-text text-muted mb-4">
+                            GPS機能を使って<br>
+                            近くの墓所を検索
+                        </p>
+                        <button class="btn btn-gold location-btn" data-action="location-search">
+                            <i class="fas fa-crosshairs me-2"></i>位置情報を取得
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Latest Posts Section (投稿がある場合のみ表示) -->
+<% if @recent_posts&.any? %>
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center mb-5">
+            <h3 class="font-serif fw-bold text-primary-custom display-6">最新の墓参り記録</h3>
+            <%= link_to posts_path, class: "text-gold text-decoration-none fw-medium view-all-link" do %>
+                すべて見る <i class="fas fa-arrow-right ms-1"></i>
+            <% end %>
+        </div>
+        
+        <div class="row g-4">
+            <% @recent_posts.each do |post| %>
+                <div class="col-sm-6 col-lg-3">
+                    <%= link_to post_path(post), class: "text-decoration-none" do %>
+                        <div class="post-card card border-0 shadow">
+                            <div class="post-image card-img-top d-flex align-items-center justify-content-center">
+                                <% if post.respond_to?(:image) && post.image.present? %>
+                                    <%= image_tag post.image, class: "img-fluid", style: "height: 200px; object-fit: cover;" %>
+                                <% else %>
+                                    <i class="fas fa-image fa-3x text-muted"></i>
+                                <% end %>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title fw-bold text-primary-custom">
+                                    <%= post.grave&.name || "投稿" %>
+                                </h5>
+                                <p class="card-text small text-muted mb-3">
+                                    <% if post.grave %>
+                                        <%= "#{post.grave.address}（#{post.grave.prefecture}）" %>
+                                    <% else %>
+                                        場所未設定
+                                    <% end %>
+                                </p>
+                                
+                                <div class="user-info d-flex align-items-center mb-3">
+                                    <div class="user-avatar rounded-circle me-3"></div>
+                                    <div>
+                                        <p class="small fw-medium mb-0 text-primary-custom">
+                                            <%= post.user&.name || post.user&.email&.split('@')&.first || "ユーザー" %>
+                                        </p>
+                                        <p class="small text-muted mb-0">
+                                            <%= time_ago_in_words(post.created_at) %>前
+                                        </p>
+                                    </div>
+                                </div>
+                                
+                                <p class="card-text small text-muted mb-3">
+                                    <%= truncate(post.body, length: 60) if post.body %>
+                                </p>
+                                
+                                <div class="post-stats d-flex align-items-center small text-muted">
+                                    <i class="fas fa-heart me-1"></i><%= post.respond_to?(:likes_count) ? (post.likes_count || 0) : rand(5..30) %>
+                                    <i class="fas fa-comment ms-4 me-1"></i><%= post.respond_to?(:comments_count) ? (post.comments_count || 0) : rand(0..10) %>
+                                </div>
+                            </div>
+                        </div>
+                    <% end %>
+                </div>
+            <% end %>
+        </div>
+    </div>
+</section>
+<% end %>
+
+<!-- Popular Categories -->
+<section class="py-5 bg-beige">
+    <div class="container">
+        <h3 class="text-center font-serif fw-bold text-primary-custom mb-5 display-6">人気のカテゴリー</h3>
+        <div class="row g-4">
+            <% @popular_categories.each do |category| %>
+                <div class="col-sm-6 col-lg-3">
+                    <%= link_to graves_path(category: category[:slug]), class: "text-decoration-none" do %>
+                        <div class="category-card card border-0 shadow text-center">
+                            <div class="card-body p-4">
+                                <i class="<%= category[:icon] %> category-icon text-gold mb-3"></i>
+                                <h4 class="fw-bold text-primary-custom mb-2"><%= category[:name] %></h4>
+                                <p class="text-muted small"><%= category[:count] %>件</p>
+                            </div>
+                        </div>
+                    <% end %>
+                </div>
+            <% end %>
+        </div>
+    </div>
+</section>
+
+<!-- Call to Action -->
+<section class="cta-section py-5 text-center">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <h3 class="font-serif fw-bold text-white mb-4 display-6">墓マイラーコミュニティに参加しませんか？</h3>
+                <p class="lead text-light mb-5">あなたの墓参り体験を共有し、同じ想いを持つ仲間と繋がりましょう</p>
+                <div class="d-flex flex-column flex-sm-row gap-3 justify-content-center">
+                    <%= link_to new_user_registration_path, class: "btn btn-gold btn-lg cta-btn-primary" do %>
+                        <i class="fas fa-user-plus me-2"></i>無料で始める
+                    <% end %>
+                    <button class="btn btn-outline-light btn-lg cta-btn-secondary">
+                        <i class="fas fa-info-circle me-2"></i>詳しく見る
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+

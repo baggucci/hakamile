@@ -6,42 +6,120 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=Noto+Serif+JP:wght@400;700&display=swap" rel="stylesheet">
+
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
-  <body>
-    <header>
-      <nav>
-        <%= link_to "Hakamile", root_path %>
-        <ul>
-
-          <% if user_signed_in? %>
-            <%= button_to "サインアウト", destroy_user_session_path, method: :delete %>
-          <% else %>       
-            <li><%= link_to "新規登録", new_user_registration_path %></li>
-            <li><%= link_to "サインイン", new_user_session_path %></li>
-          <% end %>
-            <li><%= link_to "About", about_path %></li>
-            <li><a href="/graves">お墓リスト</a></li>
-            <li><a href="/mypage">MY PAGE</a></li>
-        </ul>
-        <div class="header-search">
-        <form action="/search" method="get" id="search-form">
-            <input type="text" name="query" placeholder="キーワードで検索..." class="search-input">
-            <button type="submit" class="search-button">検索</button>
-        </form>
-        </div>
-      </nav>
+  <body class="bg-beige">
+    <!-- Header with Bootstrap styling -->
+    <header class="navbar-dark-custom shadow-lg">
+      <div class="container">
+        <nav class="navbar navbar-expand-lg navbar-dark">
+          <div class="container-fluid">
+            <!-- Brand/Logo -->
+            <%= link_to root_path, class: "navbar-brand d-flex align-items-center text-decoration-none" do %>
+              <h1 class="font-serif fw-bold text-gold mb-0 me-3 fs-2">Hakamile</h1>
+              <span class="text-light small">ハカマイル</span>
+            <% end %>
+            
+            <!-- Mobile toggle button -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <!-- Navigation menu -->
+            <div class="collapse navbar-collapse" id="navbarNav">
+              <!-- Main navigation links -->
+              <ul class="navbar-nav me-auto">
+                <li class="nav-item">
+                  <%= link_to "お墓リスト", graves_path, class: "nav-link text-light nav-link-hover" %>
+                </li>
+                <li class="nav-item">
+                  <%= link_to "About", about_path, class: "nav-link text-light nav-link-hover" %>
+                </li>
+                <% if user_signed_in? %>
+                  <li class="nav-item">
+                    <%= link_to "MY PAGE", mypage_path, class: "nav-link text-light nav-link-hover" %>
+                  </li>
+                <% end %>
+              </ul>
+              
+              <!-- Search form -->
+              <div class="me-3">
+                <%= form_with url: graves_path, method: :get, local: true, class: "d-flex header-search-form", id: "search-form" do |form| %>
+                  <%= form.text_field :query, placeholder: "キーワードで検索...", class: "form-control form-control-sm search-input me-2", style: "min-width: 200px;" %>
+                  <%= form.submit "検索", class: "btn btn-outline-light btn-sm search-button" %>
+                <% end %>
+              </div>
+              
+              <!-- Auth buttons -->
+              <div class="d-flex gap-2">
+                <% if user_signed_in? %>
+                  <%= button_to "サインアウト", destroy_user_session_path, method: :delete, class: "btn btn-outline-light btn-sm" %>
+                <% else %>
+                  <%= link_to "サインイン", new_user_session_path, class: "btn btn-link text-light text-decoration-none login-link" %>
+                  <%= link_to "新規登録", new_user_registration_path, class: "btn btn-gold btn-sm" %>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        </nav>
+      </div>
     </header>
 
+    <!-- Flash messages with Bootstrap alerts -->
     <% if notice %>
-      <p class="alert alert-success"><%= notice %></p>
+      <div class="alert alert-success alert-dismissible fade show mx-3 mt-3" role="alert">
+        <%= notice %>
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+      </div>
     <% end %>
+    
     <% if alert %>
-      <p class="alert alert-danger"><%= alert %></p>
+      <div class="alert alert-danger alert-dismissible fade show mx-3 mt-3" role="alert">
+        <%= alert %>
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+      </div>
     <% end %>
 
+    <!-- Main content -->
     <%= yield %>
+
+    <!-- Footer (既存のフッターがない場合、追加) -->
+    <footer class="footer-dark text-light py-4 mt-5">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6">
+            <h5 class="font-serif fw-bold text-gold">Hakamile</h5>
+            <p class="small">故人への敬意を込めた墓マイラーのためのコミュニティサイト</p>
+          </div>
+          <div class="col-md-6">
+            <div class="d-flex flex-wrap gap-3">
+              <%= link_to "お墓リスト", graves_path, class: "text-light text-decoration-none small" %>
+              <%= link_to "About", about_path, class: "text-light text-decoration-none small" %>
+              <% if user_signed_in? %>
+                <%= link_to "MY PAGE", mypage_path, class: "text-light text-decoration-none small" %>
+              <% end %>
+            </div>
+          </div>
+        </div>
+        <hr class="border-secondary my-3">
+        <div class="text-center">
+          <p class="small mb-0">© 2024 Hakamile. All rights reserved.</p>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   </body>
 </html>
