@@ -1,13 +1,26 @@
 class GravesController < ApplicationController
   def index
     @graves = Grave.all
+
+    # ヘッダーのキーワード検索をqueryパラメーターで処理
+    if params[:query].present?
+      @graves = Grave.where('name LIKE ?', "%#{params[:query]}%")
+    else
+      @graves = Grave.all
+    end    
     
     if params[:search].present?
-      @graves = @graves.where("name ILIKE ?", "%#{params[:search]}%")
+      @graves = @graves.where("name LIKE ?", "%#{params[:search]}%")
     end
     
-    if params[:category].present?
-      @graves = @graves.where(category: params[:category])
+    # ジャンル検索
+    if params[:genre_name].present?
+      @graves = Grave.joins(:genres).where(genres: { name: params[:genre_name] })
+    end
+
+    # 都道府県検索
+    if params[:prefecture].present?
+      @graves = Grave.where(prefecture: params[:prefecture])
     end
     
     if params[:latitude].present? && params[:longitude].present?
@@ -23,14 +36,11 @@ class GravesController < ApplicationController
   def show
 
       @grave = Grave.find(params[:id])
-      
-      # postsアソシエーションが存在するかチェック
-      if @grave.respond_to?(:posts)
-        @posts = @grave.posts.includes(:user).order(created_at: :desc)
-      else
-        @posts = Post.where(grave_id: @grave.id).includes(:user).order(created_at: :desc)
-      end
-    rescue ActiveRecord::RecordNotFound
+      @posts = @grave.posts.includes(:user).order(created_at: :desc)
+      @comment = Comment.new 
+      @comments = @grave.comments.includes(:user).order(created_at: :desc)
+    
+      rescue ActiveRecord::RecordNotFound
       redirect_to graves_path, alert: "指定された墓所が見つかりません"
     end
 

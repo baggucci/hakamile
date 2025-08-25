@@ -12,7 +12,7 @@
       <p><strong>住所:</strong> <%= @grave.address %></p>
       <p><strong>緯度:</strong> <%= @grave.latitude %></p>
       <p><strong>経度:</strong> <%= @grave.longitude %></p>
-<!--      <p><strong>ジャンル:</strong> <%= @grave.genres.map(&:name).join(', ') %></p> -->
+      <p><strong>ジャンル:</strong> <%= @grave.genres.map(&:name).join(', ') %></p>
     </div>
     <div class="card-footer">
       <%= link_to "編集する", edit_admin_grave_path(@grave), class: "btn btn-success" %>

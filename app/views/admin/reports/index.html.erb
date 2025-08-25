@@ -1,0 +1,39 @@
+<div class="container my-4">
+  <h3>通報一覧</h3>
+
+  <table class="table table-hover">
+    <thead class="thead-light">
+      <tr>
+        <th>ID</th>
+        <th>通報日時</th>
+        <th>通報者</th>
+        <th>被通報者</th>
+        <th>理由</th>
+        <th>ステータス</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @reports.each do |report| %>
+        <tr>
+          <td><%= report.id %></td>
+          <td><%= l report.created_at, format: :short %></td>
+          <td><%= report.reporter.name %></td>
+          <td><%= report.reported.name %></td>
+          <td><%= report.reason_i18n %></td> <%# enumの日本語表示 %>
+          <td>
+            <span class="badge 
+              <%= 'bg-danger' if report.pending? %>
+              <%= 'bg-warning' if report.processing? %>
+              <%= 'bg-success' if report.resolved? %>">
+              <%= report.status_i18n %> <%# enumの日本語表示 %>
+            </span>
+          </td>
+          <td>
+            <%= link_to "詳細確認", admin_report_path(report), class: "btn btn-info btn-sm" %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

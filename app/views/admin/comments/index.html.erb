@@ -1,0 +1,31 @@
+<div class="container">
+  <h3 class="my-4">コメント一覧</h3>
+  
+  <table class="table table-hover">
+    <thead class="thead-light">
+      <tr>
+        <th>ID</th>
+        <th style="width: 40%;">コメント内容</th>
+        <th>コメント投稿者</th>
+        <th>関連する投稿</th>
+        <th>投稿日時</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @comments.each do |comment| %>
+        <tr>
+          <td><%= comment.id %></td>
+          <td><%= comment.body %></td>
+          <td><%= comment.user.name %></td>
+          <%# 投稿が存在する場合のみリンクを表示 %>
+          <td><%= link_to comment.post.title, admin_post_path(comment.post) if comment.post %></td>
+          <td><%= l comment.created_at, format: :short %></td>
+          <td>
+            <%= link_to "削除", admin_comment_path(comment), method: :delete, data: { confirm: "本当に削除しますか？" }, class: "btn btn-danger btn-sm" %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

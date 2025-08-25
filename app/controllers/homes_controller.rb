@@ -17,6 +17,8 @@ class HomesController < ApplicationController
   
   def top
     # topアクションも同様に処理
+    @genres = Genre.all
+
     begin
       @recent_posts = Post.includes(:user, :grave).order(created_at: :desc).limit(4)
     rescue

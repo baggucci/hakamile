@@ -1,0 +1,11 @@
+<div class="container my-4">
+  <h4>ジャンル編集</h4>
+  <%= form_with model: [:admin, @genre], local: true do |f| %>
+    <div class="form-group mb-3">
+      <%= f.label :name, "ジャンル名" %>
+      <%= f.text_field :name, class: "form-control" %>
+    </div>
+    <%= f.submit "変更を保存", class: "btn btn-primary" %>
+    <%= link_to "一覧に戻る", admin_genres_path, class: "btn btn-secondary" %>
+  <% end %>
+</div>

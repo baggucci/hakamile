@@ -1,20 +1,17 @@
-<h1>全ユーザー一覧</h1>
-<ul>
-  <% @users.each do |user| %>
-    <li>
-      <%= user.name %> - <%= user.email %>
-      <%= link_to '削除', admin_user_path(user), method: :delete, data: { confirm: '本当に削除しますか？' } %> 
-    </li>
-  <% end %>
-</ul>
-
-<nav>
-  <ul>
-    <li><%= link_to '会員一覧', '#' %></li>      [cite: 233]
-    <li><%= link_to '投稿一覧', '#' %></li>      [cite: 234]
-    <li><%= link_to 'コメント一覧', '#' %></li>  [cite: 237]
-    <li><%= link_to '墓所詳細一覧', '#' %></li>  [cite: 236]
-    <li><%= link_to 'ジャンル一覧', '#' %></li>  [cite: 238]
-    <li><%= link_to '通報一覧', '#' %></li>      [cite: 235]
-  </ul>
-</nav>
+<div class="container my-5">
+  <div class="card shadow-sm">
+    <div class="card-header bg-primary text-white">
+      <h2 class="mb-0">管理者ページ</h2>
+    </div>
+    <div class="card-body">
+      <div class="list-group">
+        <%= link_to "会員一覧", admin_users_path, class: "list-group-item list-group-item-action" %>
+        <%= link_to "投稿一覧", admin_posts_path, class: "list-group-item list-group-item-action" %>
+        <%= link_to "コメント一覧", admin_comments_path, class: "list-group-item list-group-item-action" %>
+        <%= link_to "墓所一覧", admin_graves_path, class: "list-group-item list-group-item-action" %>
+        <%= link_to "ジャンル一覧・追加", admin_genres_path, class: "list-group-item list-group-item-action" %>
+        <%= link_to "通報一覧", admin_reports_path, class: "list-group-item list-group-item-action" %>
+      </div>
+    </div>
+  </div>
+</div>

@@ -62,7 +62,7 @@ class Admin::GravesController < ApplicationController
       :description,     # 説明文 [cite: 83]
       :latitude,        # 緯度 [cite: 85]
       :longitude,       # 経度 [cite: 87]
-#      genre_ids: []      # 関連付けるジャンルのID（複数選択を想定）[cite: 116, 129]
+      genre_ids: []      # 関連付けるジャンルのID（複数選択を想定）[cite: 116, 129]
     )
   end
 

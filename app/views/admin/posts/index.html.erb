@@ -1,0 +1,29 @@
+<div class="container">
+  <h3 class="my-4">投稿一覧</h3>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>投稿ID</th>
+        <th>タイトル</th>
+        <th>投稿者</th>
+        <th>墓所</th>
+        <th>投稿日時</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @posts.each do |post| %>
+        <tr>
+          <td><%= post.id %></td>
+          <td><%= link_to post.title, admin_post_path(post) %></td>
+          <td><%= post.user.name %></td>
+          <td><%= post.grave.name %></td>
+          <td><%= l post.created_at, format: :short %></td>
+          <td>
+            <%= link_to "削除", admin_post_path(post), method: :delete, data: { confirm: "本当に削除しますか？" }, class: "btn btn-danger btn-sm" %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

@@ -33,7 +33,6 @@
         <div class="row g-4">
             <!-- Genre Search -->
             <div class="col-lg-4">
-                <%= link_to graves_path(category: 'genre'), class: "text-decoration-none" do %>
                     <div class="search-option-card card h-100 border-0 shadow">
                         <div class="card-body text-center p-4">
                             <div class="search-icon-circle rounded-circle d-flex align-items-center justify-content-center mx-auto mb-4">
@@ -41,23 +40,22 @@
                             </div>
                             <h4 class="card-title fw-bold text-primary-custom mb-3">ジャンルから探す</h4>
                             <p class="card-text text-muted mb-4">
-                                文学・芸能・政治・スポーツ等<br>
+                                明治維新・武将・文学・政治<br>
                                 分野別に墓所を検索
                             </p>
                             <div class="d-flex flex-wrap gap-2 justify-content-center">
-                                <span class="category-badge badge">文学</span>
-                                <span class="category-badge badge">芸能</span>
-                                <span class="category-badge badge">政治</span>
-                                <span class="category-badge badge">スポーツ</span>
+
+                            <% @genres.each do |genre| %>
+                              <%= link_to genre.name, graves_path(genre_name: genre.name), class: "category-badge badge" %>
+                            <% end %>
+
                             </div>
                         </div>
                     </div>
-                <% end %>
             </div>
             
             <!-- Prefecture Search -->
             <div class="col-lg-4">
-                <%= link_to graves_path(category: 'prefecture'), class: "text-decoration-none" do %>
                     <div class="search-option-card card h-100 border-0 shadow">
                         <div class="card-body text-center p-4">
                             <div class="search-icon-circle rounded-circle d-flex align-items-center justify-content-center mx-auto mb-4">
@@ -69,14 +67,13 @@
                                 お住まいの地域から検索
                             </p>
                             <div class="d-flex flex-wrap gap-2 justify-content-center">
-                                <span class="category-badge badge">東京都</span>
-                                <span class="category-badge badge">京都府</span>
-                                <span class="category-badge badge">神奈川県</span>
-                                <span class="category-badge badge">大阪府</span>
+                                <%= link_to "東京都", graves_path(prefecture: "東京都"), class: "category-badge badge" %>
+                                <%= link_to "京都府", graves_path(prefecture: "京都府"), class: "category-badge badge" %>
+                                <%= link_to "大阪府", graves_path(prefecture: "大阪府"), class: "category-badge badge" %>
+                                <%= link_to "福岡県", graves_path(prefecture: "福岡県"), class: "category-badge badge" %>
                             </div>
                         </div>
                     </div>
-                <% end %>
             </div>
             
             <!-- Location Search -->

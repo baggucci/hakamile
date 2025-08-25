@@ -1,26 +1,49 @@
 <%# app/views/public/users/edit.html.erb %>
 
-<div class="container mt-4">
+<div class="container mt-4 mb-5">
   <div class="row">
     <div class="col-md-6 offset-md-3">
-      <h3>プロフィール編集</h3>
+      <h3 class="mb-4 text-center">プロフィール編集</h3>
+
+      <% if @user.errors.any? %>
+        <div class="alert alert-danger" role="alert">
+          <h4 class="alert-heading"><%= @user.errors.count %>件のエラーが発生しました</h4>
+          <ul>
+            <% @user.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
       
-      <%= form_with model: @user, url: mypage_path, method: :patch, local: true do |f| %>
-        <div class="form-group">
+      <%= form_with model: @user, url: mypage_path, method: :patch do |f| %>
+        <div class="form-group mb-3">
           <%= f.label :name, "名前" %>
           <%= f.text_field :name, class: "form-control" %>
         </div>
-        
-        <div class="form-group">
+
+        <div class="form-group mb-4">
           <%= f.label :profile, "自己紹介" %>
           <%= f.text_area :profile, rows: 5, class: "form-control" %>
         </div>
-        
-        <div class="form-group">
+
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
           <%= f.submit "更新する", class: "btn btn-primary" %>
           <%= link_to "マイページに戻る", mypage_path, class: "btn btn-secondary" %>
         </div>
       <% end %>
+
+      <%# --- ここから退会エリア --- %>
+      <hr class="my-5"> <%# 水平線でフォームと明確に分離 %>
+
+      <div class="text-center">
+        <h5 class="text-danger">アカウントの退会</h5>
+        <p class="text-muted">退会手続きを行うと、アカウントを復元することはできません。</p>
+        <%= link_to "退会する", user_registration_path, method: :delete,
+            data: { confirm: "本当によろしいですか？\nこの操作は取り消せません。" },
+            class: "btn btn-outline-danger" %>
+      </div>
+
     </div>
   </div>
 </div>
