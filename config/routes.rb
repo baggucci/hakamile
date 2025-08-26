@@ -34,13 +34,13 @@ Rails.application.routes.draw do
   resources :graves, only: [:index, :show,]  # 墓所管理
 
 
-   # --- ここからマイページ関連のルートを追加 ---
-   get 'mypage' => 'users#mypage'
-   get 'mypage/edit' => 'users#edit', as: 'edit_mypage' # プロフィール編集画面
-   patch 'mypage' => 'users#update'                    # プロフィール更新処理
-   # --- ここまで ---
+  # --- ここからマイページ関連のルートを追加 ---
+  get 'mypage' => 'users#mypage'
+  get 'mypage/edit' => 'users#edit', as: 'edit_mypage' # プロフィール編集画面
+  patch 'mypage' => 'users#update'                    # プロフィール更新処理
+  # --- ここまで ---
 
-   resources :posts do
+  resources :posts do
     # ↓ postsリソースの中にcommentsリソースをネストさせる
     resources :comments, only: [:create, :destroy]
   end
@@ -50,8 +50,8 @@ Rails.application.routes.draw do
     resources :comments, only: [:create, :destroy]
   end
   
- # 管理者向け機能のURLを /admin/... に統一
- namespace :admin do
+# 管理者向け機能のURLを /admin/... に統一
+namespace :admin do
   root to: 'homes#top' # 管理者トップページ
   get 'dashboards', to: 'dashboards#index'
 
