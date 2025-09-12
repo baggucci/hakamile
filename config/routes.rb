@@ -1,5 +1,12 @@
 Rails.application.routes.draw do
   namespace :admin do
+    get 'inquiries/index'
+    get 'inquiries/show'
+    get 'inquiries/update'
+  end
+  get 'reports/new'
+  get 'reports/create'
+  namespace :admin do
     get 'reports/index'
     get 'reports/show'
     get 'reports/update'
@@ -29,9 +36,12 @@ Rails.application.routes.draw do
   
   root 'homes#top'
   get 'about' => 'homes#about'
+  get 'inquiries/complete' => 'inquiries#complete'
+  
   devise_for :users
   resources :posts
   resources :graves, only: [:index, :show,]  # 墓所管理
+  resources :inquiries, only: [:new, :create]
 
 
   # --- ここからマイページ関連のルートを追加 ---
@@ -43,11 +53,13 @@ Rails.application.routes.draw do
   resources :posts do
     # ↓ postsリソースの中にcommentsリソースをネストさせる
     resources :comments, only: [:create, :destroy]
+    resources :reports, only: [:new, :create]
   end
 
   resources :graves do
     # graveにネストさせる形でcommentsのルーティングを追加
     resources :comments, only: [:create, :destroy]
+    resources :reports, only: [:new, :create]
   end
   
 # 管理者向け機能のURLを /admin/... に統一
@@ -62,6 +74,7 @@ namespace :admin do
   resources :genres, except: [:new, :show] # ジャンル管理
 
   resources :comments, only: [:index, :destroy]
-  resources :reports, only: [:index, :show, :update]
+  resources :inquiries, only: [:index, :show, :update] 
+  
   end
 end

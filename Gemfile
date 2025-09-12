@@ -72,3 +72,5 @@ gem "net-imap"
 gem 'image_processing', '~> 1.2' # 画像処理用
 gem 'geocoder' # 位置情報検索用
 gem 'kaminari' # ページネーション用
+
+gem "enum_help"

@@ -1,0 +1,40 @@
+<div class="container mt-4">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="h3">問い合わせ詳細</h1>
+    <%= link_to '一覧へ戻る', admin_inquiries_path, class: 'btn btn-outline-secondary' %>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <strong>受付日時：</strong>
+      <%# `l` ヘルパーを使うと /config/locales/ja.yml の書式で表示できます %>
+      <%= l @inquiry.created_at, format: :long %>
+    </div>
+    <div class="card-body">
+      <dl class="row">
+        <dt class="col-sm-3">ID</dt>
+        <dd class="col-sm-9"><%= @inquiry.id %></dd>
+
+        <dt class="col-sm-3">お名前</dt>
+        <dd class="col-sm-9"><%= @inquiry.name %></dd>
+
+        <dt class="col-sm-3">メールアドレス</dt>
+        <dd class="col-sm-9"><%= @inquiry.email %></dd>
+
+        <dt class="col-sm-3">件名</dt>
+        <dd class="col-sm-9"><%= @inquiry.subject %></dd>
+
+        <dt class="col-sm-3">内容</dt>
+        <dd class="col-sm-9">
+          <%# simple_formatは、改行文字(\n)を<br>タグに変換して表示します %>
+          <%= simple_format(@inquiry.message) %>
+        </dd>
+      </dl>
+    </div>
+  </div>
+
+  <%# 必要であれば削除ボタンなども設置します %>
+  <div class="text-end mt-4">
+    <%= link_to 'この問い合わせを削除する', admin_inquiry_path(@inquiry), data: { turbo_method: :delete, turbo_confirm: '本当に削除しますか？' }, class: 'btn btn-danger' %>
+  </div>
+</div>

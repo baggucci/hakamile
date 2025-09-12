@@ -1,0 +1,36 @@
+<div class="container my-5">
+  <div class="row">
+    <div class="col-md-6 offset-md-3">
+      <div class="card">
+        <div class="card-header">
+          <h4>投稿の報告</h4>
+        </div>
+        <div class="card-body">
+          <p>以下の投稿について、問題点を報告してください。</p>
+          
+          <div class="alert alert-light">
+            <strong>投稿者:</strong> <%= @post.user.name %><br>
+            <strong>タイトル:</strong> <%= @post.title %>
+          </div>
+
+          <%= form_with model: [@post, @report], url: post_reports_path(@post), local: true do |f| %>
+            <div class="form-group mb-3">
+              <%= f.label :reason, "報告理由" %>
+              <%= f.select :reason, Report.reasons.keys.map { |k| [I18n.t("enums.report.reason.#{k}"), k] }, {}, class: "form-select" %>
+            </div>
+            
+            <%# --- ここから自由記述欄を追加 --- %>
+            <div class="form-group mb-4">
+              <%= f.label :note, "具体的な問題点 (任意)" %>
+              <%= f.text_area :note, rows: 4, class: "form-control", placeholder: "問題のある箇所や、その理由などを具体的に入力してください。" %>
+            </div>
+            <%# --- ここまで追加 --- %>
+
+            <%= f.submit "管理者へ報告する", class: "btn btn-danger w-100" %>
+            <%= link_to "キャンセル", post_path(@post), class: "btn btn-secondary w-100 mt-2" %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

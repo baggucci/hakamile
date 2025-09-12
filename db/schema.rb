@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2025_08_24_042903) do
+ActiveRecord::Schema.define(version: 2025_09_10_102318) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -89,6 +89,19 @@ ActiveRecord::Schema.define(version: 2025_08_24_042903) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "inquiries", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "email", null: false
+    t.integer "category", null: false
+    t.integer "status", default: 0, null: false
+    t.text "message", null: false
+    t.string "linkable_type"
+    t.integer "linkable_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["linkable_type", "linkable_id"], name: "index_inquiries_on_linkable"
+  end
+
   create_table "likes", force: :cascade do |t|
     t.integer "user_id", null: false
     t.integer "post_id", null: false
@@ -108,6 +121,21 @@ ActiveRecord::Schema.define(version: 2025_08_24_042903) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["grave_id"], name: "index_posts_on_grave_id"
     t.index ["user_id"], name: "index_posts_on_user_id"
+  end
+
+  create_table "reports", force: :cascade do |t|
+    t.integer "reporter_id", null: false
+    t.integer "reported_id", null: false
+    t.string "reportable_type", null: false
+    t.integer "reportable_id", null: false
+    t.integer "reason"
+    t.integer "status"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.text "note"
+    t.index ["reportable_type", "reportable_id"], name: "index_reports_on_reportable"
+    t.index ["reported_id"], name: "index_reports_on_reported_id"
+    t.index ["reporter_id"], name: "index_reports_on_reporter_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -134,4 +162,6 @@ ActiveRecord::Schema.define(version: 2025_08_24_042903) do
   add_foreign_key "likes", "users"
   add_foreign_key "posts", "graves"
   add_foreign_key "posts", "users"
+  add_foreign_key "reports", "reporteds"
+  add_foreign_key "reports", "reporters"
 end

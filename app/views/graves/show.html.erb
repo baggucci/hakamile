@@ -34,54 +34,63 @@
 
 <%# --- コメント機能 --- %>
 <% @posts.each do |post| %>
-  <div class="row mb-5"> <%# 投稿ごとに余白を追加 %>
-    <div class="col-md-8 offset-md-2">
+  <div class="row mb-5"> <%# 投稿ごとに余白を追加 %>
+    <div class="col-md-8 offset-md-2">
       <%# --- ここに投稿自体の内容を表示（例） --- %>
       <h4><%= post.title %></h4>
       <p><%= post.body %></p>
       <%# ------------------------------------ %>
 
-      <h5 class="mb-3 mt-4">コメント</h5>
-  
-      <%# ログインしているユーザーのみフォームを表示 %>
-      <% if user_signed_in? %>
-        <%= form_with model: [post, Comment.new] do |f| %>
-          <div class="form-group mb-3">
-            <%= f.text_area :body, rows: 2, class: 'form-control', placeholder: 'この投稿にコメントする...' %>
-          </div>
-          <%= f.submit "コメント投稿", class: 'btn btn-outline-primary btn-sm' %>
-        <% end %>
-      <% else %>
-        <p>コメントを投稿するには、<%= link_to "ログイン", new_user_session_path %>が必要です。</p>
-      <% end %>
-  
-      <hr class="my-4">
-  
-      <%# コメント一覧表示 (修正点1) %>
-      <div id="comments-area-post-<%= post.id %>"> <%# IDをユニークに %>
-        <% if post.comments.any? %>
-          <% post.comments.each do |comment| %>
-            <div class="card mb-3">
-              <div class="card-body">
-                <p class="card-text"><%= simple_format(h(comment.body)) %></p>
-                <div class="d-flex justify-content-between align-items-center">
-                  <small class="text-muted">
-                    投稿者: <%= comment.user.name %> | <%= l comment.created_at, format: :long %>
-                  </small>
-                  <% if comment.user == current_user %>
-                    <%# 削除リンク (修正点2) %>
-                    <%= link_to "削除", post_comment_path(post, comment), method: :delete, data: { confirm: "本当に削除しますか？" }, class: 'btn btn-outline-danger btn-sm' %>
-                  <% end %>
-                </div>
-              </div>
-            </div>
-          <% end %>
-        <% else %>
-          <p>この投稿にはまだコメントがありません。</p>
-        <% end %>
-      </div>
-    </div>
-  </div>
+      <h5 class="mb-3 mt-4">コメント</h5>
+
+      <%# ログインしているユーザーのみフォームを表示 %>
+      <% if user_signed_in? %>
+        <%= form_with model: [post, Comment.new] do |f| %>
+          <div class="form-group mb-3">
+            <%= f.text_area :body, rows: 2, class: 'form-control', placeholder: 'この投稿にコメントする...' %>
+          </div>
+          <%= f.submit "コメント投稿", class: 'btn btn-outline-primary btn-sm' %>
+        <% end %>
+      <% else %>
+        <p>
+          コメントを投稿するには、
+          <%= link_to "ログイン", new_user_session_path %>
+          が必要です。
+        </p>
+      <% end %>
+
+      <hr class="my-4">
+
+      <%# コメント一覧表示 (修正点1) %>
+      <div id="comments-area-post-<%= post.id %>"> <%# IDをユニークに %>
+        <% if post.comments.any? %>
+          <% post.comments.each do |comment| %>
+            <div class="card mb-3">
+              <div class="card-body">
+                <p class="card-text"><%= simple_format(h(comment.body)) %></p>
+                <div class="d-flex justify-content-between align-items-center">
+                  <small class="text-muted">
+                    投稿者: <%= comment.user.name %> |
+                    <%= l comment.created_at, format: :long %>
+                  </small>
+                  <% if comment.user == current_user %>
+                    <%# 削除リンク (修正点2) %>
+                    <%= link_to "削除",
+                                post_comment_path(post, comment),
+                                method: :delete,
+                                data: { confirm: "本当に削除しますか？" },
+                                class: 'btn btn-outline-danger btn-sm' %>
+                  <% end %>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        <% else %>
+          <p>この投稿にはまだコメントがありません。</p>
+        <% end %>
+      </div>
+    </div>
+  </div>
 <% end %>
 
 <%= link_to '一覧に戻る', graves_path %>

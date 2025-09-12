@@ -32,4 +32,7 @@ class HomesController < ApplicationController
       { name: 'スポーツ選手', icon: 'fas fa-running', count: 987, slug: 'sports' }
     ]
   end
+
+  def contact
+    end
 end
