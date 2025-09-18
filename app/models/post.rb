@@ -3,6 +3,8 @@ class Post < ApplicationRecord
   belongs_to :grave
   has_many :comments, dependent: :destroy
   has_many :likes, dependent: :destroy
+  has_many_attached :images # 複数形にする
+
 
   validates :title, presence: true
   validates :body, presence: true

@@ -15,3 +15,24 @@ ja:
       default: "%Y/%m/%d %H:%M:%S" # 例: 2025/09/10 12:30:45
       short: "%m/%d %H:%M"        # 例: 09/10 12:30
       long: "%Y年%m月%d日(%a) %H時%M分" # 例: 2025年09月10日(水) 12時30分
+
+  date:
+    abbr_day_names:
+      - 日
+      - 月
+      - 火
+      - 水
+      - 木
+      - 金
+      - 土
+
+  datetime:
+    distance_in_words:
+      x_days: '%{count}日' # 「〜日」とだけ定義     
+      
+  devise:
+    sessions:
+      signed_in: 'ログインしました。'
+
+    failure:
+      unauthenticated: '続けるにはログインまたはアカウント登録が必要です。'

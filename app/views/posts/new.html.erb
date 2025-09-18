@@ -1,7 +1,19 @@
-<h1>Posts#new</h1>
-<p>Find me in app/views/posts/new.html.erb</p>
-
-<div class="container">
-  <h3 class="my-4">新規投稿</h3>
-  <%= render 'form', post: @post %>
+<div class="container my-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <h2 class="text-center mb-4">
+        <%= @grave.name %> への墓参日記
+      </h2>
+      
+      <div class="card">
+        <div class="card-body">
+          <%= render 'form', post: @post, grave: @grave %>
+        </div>
+      </div>
+      
+      <div class="text-center mt-3">
+        <%= link_to '戻る', grave_path(@grave), class: 'btn btn-secondary' %>
+      </div>
+    </div>
+  </div>
 </div>

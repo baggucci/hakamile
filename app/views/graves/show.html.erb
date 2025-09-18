@@ -1,96 +1,81 @@
-<h1><%= @grave.name %> の詳細</h1>
+<%# app/views/graves/show.html.erb %>
 
-<p><strong>人名:</strong> <%= @grave.name %></p>
-<p><strong>所在地都道府県:</strong> <%= @grave.prefecture %></p>
-<p><strong>住所:</strong> <%= @grave.address %></p>
-<p><strong>説明文:</strong> <%= @grave.description %></p>
+<div class="container my-5">
+  <%# --- パンくずリスト --- %>
+  <nav aria-label="breadcrumb" class="mb-4">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><%= link_to "トップ", root_path %></li>
+      <li class="breadcrumb-item"><%= link_to "偉人一覧", graves_path %></li>
+      <li class="breadcrumb-item active" aria-current="page"><%= @grave.name %></li>
+    </ol>
+  </nav>
 
-<p>
-  <strong>ジャンル:</strong>
-  <% if @grave.genres.present? %>
-    <%# pluck(:name)でジャンル名だけの配列を取得し、" / "で連結 %>
-    <%= @grave.genres.pluck(:name).join(' / ') %>
-  <% else %>
-    ジャンル未登録
-  <% end %>
-</p>
-
-<hr>
-
-<h3>位置情報</h3>
-<p><strong>緯度:</strong> <%= @grave.latitude %></p>
-<p><strong>経度:</strong> <%= @grave.longitude %></p>
-
-<hr>
-
-<h3>地図</h3>
-<div id="map" style="height: 400px; width: 100%;" 
-     data-latitude="<%= @grave.latitude %>" 
-     data-longitude="<%= @grave.longitude %>"></div>
-
-<script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['GOOGLE_MAPS_API_KEY'] %>&callback=initMap" async defer></script>
-
-<hr>
-
-<%# --- コメント機能 --- %>
-<% @posts.each do |post| %>
-  <div class="row mb-5"> <%# 投稿ごとに余白を追加 %>
-    <div class="col-md-8 offset-md-2">
-      <%# --- ここに投稿自体の内容を表示（例） --- %>
-      <h4><%= post.title %></h4>
-      <p><%= post.body %></p>
-      <%# ------------------------------------ %>
-
-      <h5 class="mb-3 mt-4">コメント</h5>
-
-      <%# ログインしているユーザーのみフォームを表示 %>
-      <% if user_signed_in? %>
-        <%= form_with model: [post, Comment.new] do |f| %>
-          <div class="form-group mb-3">
-            <%= f.text_area :body, rows: 2, class: 'form-control', placeholder: 'この投稿にコメントする...' %>
-          </div>
-          <%= f.submit "コメント投稿", class: 'btn btn-outline-primary btn-sm' %>
-        <% end %>
-      <% else %>
-        <p>
-          コメントを投稿するには、
-          <%= link_to "ログイン", new_user_session_path %>
-          が必要です。
-        </p>
-      <% end %>
-
-      <hr class="my-4">
-
-      <%# コメント一覧表示 (修正点1) %>
-      <div id="comments-area-post-<%= post.id %>"> <%# IDをユニークに %>
-        <% if post.comments.any? %>
-          <% post.comments.each do |comment| %>
-            <div class="card mb-3">
-              <div class="card-body">
-                <p class="card-text"><%= simple_format(h(comment.body)) %></p>
-                <div class="d-flex justify-content-between align-items-center">
-                  <small class="text-muted">
-                    投稿者: <%= comment.user.name %> |
-                    <%= l comment.created_at, format: :long %>
-                  </small>
-                  <% if comment.user == current_user %>
-                    <%# 削除リンク (修正点2) %>
-                    <%= link_to "削除",
-                                post_comment_path(post, comment),
-                                method: :delete,
-                                data: { confirm: "本当に削除しますか？" },
-                                class: 'btn btn-outline-danger btn-sm' %>
-                  <% end %>
-                </div>
-              </div>
-            </div>
-          <% end %>
+  <%# --- 1. 人物紹介セクション --- %>
+  <section class="profile-header mb-5">
+    <div class="row align-items-center">
+      <div class="col-md-3 text-center">
+        <%# 画像が設定されている場合のみ表示 %>
+        <% if @grave.main_image.attached? %>
+          <%= image_tag @grave.main_image, class: 'profile-image' %>
         <% else %>
-          <p>この投稿にはまだコメントがありません。</p>
+          <%# 画像がない場合のプレースホルダー %>
+          <%= image_tag 'default_profile.png', class: 'profile-image' %>
         <% end %>
       </div>
+      <div class="col-md-9 profile-details">
+        <h1 class="profile-name"><%= @grave.name %></h1>
+        <p class="profile-years">1834-1867</p> <%# TODO: 生没年を動的に %>
+        <p class="profile-description"><%= simple_format(h(@grave.description)) %></p>
+        <div class="meta-info">
+          <% if @grave.genres.present? %>
+            <span class="genre-tag"><%= @grave.genres.pluck(:name).join(' / ') %></span>
+          <% end %>
+          <span class="location-info">
+            <i class="fas fa-map-marker-alt"></i> <%= @grave.address %>
+          </span>
+        </div>
+      </div>
     </div>
-  </div>
-<% end %>
+  </section>
 
-<%= link_to '一覧に戻る', graves_path %>
+  <hr class="my-5">
+
+  <%# --- 2. 地図セクション --- %>
+  <section class="map-section mb-5">
+    <h2 class="section-title">地図</h2>
+    <div id="map" style="height: 400px; width: 100%;" data-latitude="<%= @grave.latitude %>" data-longitude="<%= @grave.longitude %>"></div>
+  </section>
+
+  <hr class="my-5">
+
+<%# --- 投稿機能セクション --- %>
+<section class="new-post-section mb-5 text-center">
+  <% if user_signed_in? %>
+    <%# モーダルを開くためのボタン（これは残す） %>
+    <button type="button" class="btn btn-primary btn-lg" data-bs-toggle="modal" data-bs-target="#newPostModal">
+      <i class="fas fa-camera"></i> 墓参日記を投稿する
+    </button>
+  <% else %>
+    <p>墓参日記を投稿するには、<%= link_to "ログイン", new_user_session_path %>が必要です。</p>
+  <% end %>
+</section>
+
+<hr class="my-5">
+
+
+  <%# --- 3. 墓参日記セクション --- %>
+  <section class="reviews-section">
+    <h2 class="section-title">墓参日記 <small>(<%= @posts.count %>件)</small></h2>
+    
+    <%# @postsコレクションを渡し、postごとに部分テンプレートを描画 %>
+    <%= render @posts %>
+
+  </section>
+
+  <div class="text-center mt-5">
+    <%= link_to '偉人一覧に戻る', graves_path, class: 'btn btn-secondary' %>
+  </div>
+</div>
+
+<%# JavaScriptの読み込み %>
+<script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['GOOGLE_MAPS_API_KEY'] %>&callback=initMap" async defer></script>

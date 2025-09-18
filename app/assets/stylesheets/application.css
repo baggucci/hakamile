@@ -33,3 +33,20 @@
     border: 3px solid var(--soft-gold);
 }
  
+/* テーブル内のリンクのスタイル */
+.table td a {
+    /* 普段は下線を消しておく */
+    text-decoration: none;
+    /* 普段の文字色（お好みで調整してください） */
+    color: #337ab7;
+    /* 色が滑らかに変わるアニメーション効果 */
+    transition: color 0.2s ease-in-out;
+  }
+  
+  /* テーブル内のリンクにカーソルが当たった時のスタイル */
+  .table td a:hover {
+    /* 下線を表示する */
+    text-decoration: underline;
+    /* 色を変える（お好みで調整してください） */
+    color: #dc3545;
+  }

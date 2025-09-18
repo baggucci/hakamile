@@ -1,0 +1,2 @@
+// idが 'like-button-<%= @post.id %>' の要素の中身を、パーシャルで再描画する
+$('#like-button-<%= @post.id %>').html("<%= j(render 'likes/like_button', post: @post) %>");

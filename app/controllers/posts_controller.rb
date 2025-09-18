@@ -11,29 +11,29 @@ class PostsController < ApplicationController
   end
 
   def show
-       # @postはbefore_actionで設定済み
-#       @comment = Comment.new # 詳細ページでコメント投稿フォームを表示するため
+    @post = Post.find(params[:id])
+    @comment = Comment.new  
 
   end
 
   def new
+    @grave = Grave.find(params[:grave_id]) # リンクから渡されたgrave_idを受け取る
     @post = Post.new
   end
-
+  
   def edit
         # @postはbefore_actionで設定済み
   end
 
   def create
-    @post = Post.new(post_params)
-    @post.user_id = current_user.id
-
+    @post = current_user.posts.build(post_params)
     if @post.save
-      redirect_to post_path(@post), notice: "投稿が完了しました。"
+      redirect_to grave_path(@post.grave), notice: '墓参日記を投稿しました。'
     else
-      # 保存に失敗した場合
-      flash.now[:alert] = '投稿の作成に失敗しました。入力内容を確認してください。' # エラーメッセージをセット
-      render :new # newビューを再表示
+      # 失敗した場合、newアクションで使った@graveを再設定してnewページを再表示
+      @grave = Grave.find(post_params[:grave_id])
+      flash.now[:alert] = '投稿に失敗しました。'
+      render :new
     end
   end
 
@@ -60,7 +60,7 @@ class PostsController < ApplicationController
 
   # Strong Parameters
   def post_params
-    params.require(:post).permit(:title, :body, :grave_id, :status)
+    params.require(:post).permit(:title, :body, :grave_id, :status, :images[])
   end
   
   # 対象の投稿データを取得する

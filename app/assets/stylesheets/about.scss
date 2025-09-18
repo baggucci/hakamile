@@ -1,0 +1,19 @@
+.about-hero {
+    // --- ↓ここから変更↓ ---
+  
+    // 1. 親要素の横幅を無視して画面いっぱいに広げる設定
+    min-height: 100px;
+    width: 100vw;
+    position: relative;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+    
+    // 2. 背景色と内側の「上下」余白を調整
+    background-color: #1a253a;  // 深いネイビーに変更
+    padding-top: 2rem;           // 上の余白
+    padding-bottom: 2rem;        // 下の余白
+    color: #ffffff;            // 文字色を白に
+
+    }

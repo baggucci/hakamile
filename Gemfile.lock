@@ -102,6 +102,10 @@ GEM
     geocoder (1.8.5)
       base64 (>= 0.1.0)
       csv (>= 3.0.0)
+    geokit (1.14.0)
+    geokit-rails (2.5.0)
+      geokit (~> 1.5)
+      rails (>= 3.0)
     globalid (1.2.1)
       activesupport (>= 6.1)
     i18n (1.14.7)
@@ -291,6 +295,7 @@ DEPENDENCIES
   dotenv-rails
   enum_help
   geocoder
+  geokit-rails
   image_processing (~> 1.2)
   jbuilder (~> 2.7)
   kaminari

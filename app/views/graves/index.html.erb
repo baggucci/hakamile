@@ -1,32 +1,37 @@
-<!-- app/views/graves/index.html.erb -->
-<!-- 一般ユーザー向け 墓所一覧ページ -->
-<div class="container">
-  <div class="my-4">
+  <div class="page-header">
     <h3>墓所一覧</h3>
   </div>
 
-  <table class="table table-hover">
-    <thead class="thead-light">
-      <tr>
-        <th>名称</th>
-        <th>都道府県</th>
-        <th>ジャンル</th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @graves.each do |grave| %>
+<div class="container py-4">
+  <div class="list-container bg-white shadow-sm">
+    <table class="table table-hover mb-0">
+      <thead class="thead-light">
         <tr>
-          <td><%= grave.name %></td>
-          <td><%= grave.prefecture %></td>
-          <td>
-          <%= grave.genres.pluck(:name).join(' / ') %>
-          </td>
-          <td>
-            <%= link_to "詳細", grave_path(grave), class: "btn btn-info btn-sm" %>
-          </td>
+          <th scope="col" style="width: 40%;">名称</th>
+          <th scope="col" style="width: 25%;">都道府県</th>
+          <th scope="col" style="width: 35%;">ジャンル</th>
         </tr>
-      <% end %>
-    </tbody>
-  </table>
+      </thead>
+      <tbody>
+        <% @graves.each do |grave| %>
+          <tr>
+            <td>
+              <div class="d-flex align-items-center">
+                <% if grave.main_image.attached? %>
+                  <%= image_tag grave.main_image.variant(resize_to_fill: [50, 50]), class: "rounded me-3" %>
+                <% else %>
+                  <div class="list-img-placeholder rounded me-3">
+                    <i class="fas fa-camera text-muted"></i>
+                  </div>
+                <% end %>
+                <%= link_to grave.name, grave_path(grave), class: "fw-bold" %>
+              </div>
+            </td>
+            <td class="align-middle"><%= grave.prefecture %></td>
+            <td class="align-middle"><%= grave.genres.pluck(:name).join(' / ') %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
 </div>

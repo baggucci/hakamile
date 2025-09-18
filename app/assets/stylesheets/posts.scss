@@ -1,3 +1,44 @@
-// Place all the styles related to the Posts controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: https://sass-lang.com/
+/* review-body (テキスト省略) */
+.review-body .text-content {
+  overflow: hidden; /* JavaScriptで制御するため */
+}
+
+.review-body .text-content p {
+  margin-bottom: 0; /* simple_formatで生成されるpタグの余白をリセット */
+}
+
+/* 画像コンテナ */
+.review-images-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px; /* 画像間の隙間 */
+}
+
+.review-image {
+  object-fit: cover; /* 画像の比率を維持しつつ、指定した領域に収める */
+  border-radius: 8px; /* 角を丸くする */
+}
+
+.review-image-large {
+  width: 100%; /* 大サイズはコンテナ幅いっぱいに */
+  height: 200px; /* 大画像の高さ */
+}
+
+.review-image-medium {
+  width: calc(50% - 4px); /* 中サイズは2枚並べるために半分の幅 (gapを考慮) */
+  height: 100px; /* 中画像の高さ */
+}
+
+/* 3枚目以降の画像がある場合のオーバーレイ */
+.more-images-overlay {
+  background-color: rgba(0, 0, 0, 0.5); /* 半透明の黒 */
+  position: relative;
+  border-radius: 8px;
+}
+
+.more-images-overlay span {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}

@@ -17,11 +17,10 @@
 
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+
   </head>
 
-  <body class="bg-beige">
-    <p>lorem ipsum</p>  <!-- この行を追加 -->
-
+  <body class="bg-beige <%= 'top-page' if current_page?(root_path) %>">
     <!-- Header with Bootstrap styling -->
     <header class="navbar-dark-custom shadow-lg">
       <div class="container">

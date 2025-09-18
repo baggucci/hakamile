@@ -1,0 +1,16 @@
+<% if user_signed_in? %>
+  <% if current_user.liked?(post) %>
+    <%# いいね済みの場合は、いいね解除ボタンを表示 %>
+    <%= link_to post_likes_path(post), method: :delete, remote: true, class: "btn btn-danger" do %>
+      <i class="fas fa-heart"></i> いいね解除 <%= post.likes.count %>
+    <% end %>
+  <% else %>
+    <%# いいねしていない場合は、いいねボタンを表示 %>
+    <%= link_to post_likes_path(post), method: :post, remote: true, class: "btn btn-outline-danger" do %>
+      <i class="far fa-heart"></i> いいね <%= post.likes.count %>
+    <% end %>
+  <% end %>
+<% else %>
+  <%# ログインしていない場合は、いいね数のみ表示 %>
+  <span class="text-muted"><i class="far fa-heart"></i> <%= post.likes.count %></span>
+<% end %>

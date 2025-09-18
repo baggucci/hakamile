@@ -8,17 +8,60 @@
       <p><strong>投稿日時:</strong> <%= l @post.created_at, format: :long %></p>
       <hr>
       <p><%= simple_format(@post.body) %></p>
+
+      <%# --- ここからいいねボタンを追加 --- %>
+      <div class="like-section my-3" id="like-button-<%= @post.id %>">
+        <%= render 'likes/like_button', post: @post %>
+      </div>
+      <%# --- ここまで --- %>
+
     </div>
     
     <%# 投稿者本人である場合のみ編集・削除ボタンを表示 %>
     <% if @post.user == current_user %>
       <div class="card-footer">
         <%= link_to "編集する", edit_post_path(@post), class: "btn btn-success" %>
-        <%# data-turbo-confirm で確認ダイアログを表示 %>
         <%= link_to "削除する", post_path(@post), method: :delete, data: { "turbo-method": :delete, "turbo-confirm": "本当に削除しますか？" }, class: "btn btn-danger" %>
       </div>
     <% end %>
+
+
+    <%# --- ここからコメント機能を追加 --- %>
+  <div class="comment-section mt-4">
+    <hr>
+    <h4 class="mb-3">コメント</h4>
+
+    <%# --- コメント一覧 --- %>
+    <div class="comment-list mb-4" id="comment-list-<%= @post.id %>">
+      <% @post.comments.each do |comment| %>
+        <div class="card mb-2">
+          <div class="card-body py-2">
+            <strong><%= comment.user.name %></strong>
+            <small class="text-muted ms-2"><%= l comment.created_at, format: :short %></small>
+            <p class="card-text mt-1 mb-1"><%= simple_format(h(comment.body), {}, wrapper_tag: "span") %></p>
+          </div>
+          <% if comment.user == current_user %>
+            <div class="card-footer py-1 text-end">
+              <%= link_to '削除', post_comment_path(@post, comment), method: :delete, data: { "turbo-method": :delete, "turbo-confirm": '本当に削除しますか？' }, class: 'btn btn-sm btn-outline-danger' %>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+
+    <%# --- コメント投稿フォーム --- %>
+    <% if user_signed_in? %>
+      <%= form_with model: [@post, @comment] do |f| %>
+        <div class="mb-3">
+          <%= f.text_area :body, rows: 3, class: 'form-control', placeholder: 'コメントを追加...' %>
+        </div>
+        <%= f.submit "コメントを投稿", class: 'btn btn-primary' %>
+      <% end %>
+    <% else %>
+      <p>コメントを投稿するには<a href="<%= new_user_session_path %>">ログイン</a>してください。</p>
+    <% end %>
   </div>
+  <%# --- ここまで --- %>
   
-  
+  </div>
 </div>

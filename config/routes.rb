@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'likes/create'
+  get 'likes/destroy'
   namespace :admin do
     get 'inquiries/index'
     get 'inquiries/show'
@@ -53,13 +55,24 @@ Rails.application.routes.draw do
   resources :posts do
     # ↓ postsリソースの中にcommentsリソースをネストさせる
     resources :comments, only: [:create, :destroy]
-    resources :reports, only: [:new, :create]
+    # resources :reports, only: [:new, :create]
+    resource :likes, only: [:create, :destroy] # favorites を likes に変更
+    
   end
+
+  resources :posts, only: [:index] # 投稿一覧のみ独立させる
+
 
   resources :graves do
     # graveにネストさせる形でcommentsのルーティングを追加
     resources :comments, only: [:create, :destroy]
     resources :reports, only: [:new, :create]
+    resources :posts, only: [:new, :create, :show, :edit, :update, :destroy], shallow: true
+    resources :graves do
+      collection do
+        get 'search' # graves/search というURLでアクセスできるようにする
+      end
+    end
   end
   
 # 管理者向け機能のURLを /admin/... に統一

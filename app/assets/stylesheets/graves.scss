@@ -1,3 +1,68 @@
-// Place all the styles related to the Graves controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: https://sass-lang.com/
+.page-header {
+    // --- ↓ここから変更↓ ---
+  
+    // 1. 親要素の横幅を無視して画面いっぱいに広げる設定
+    min-height: 100px;
+    width: 100vw;
+    position: relative;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+    
+    // 2. 背景色と内側の「上下」余白を調整
+    background-color: #1a253a;  // 深いネイビーに変更
+    padding-top: 2rem;           // 上の余白
+    padding-bottom: 2rem;        // 下の余白
+  
+    // ブロック内のh3タグのスタイル
+    h3 {
+      color: #ffffff;            // 文字色を白に
+      margin-bottom: 0;          // h3のデフォルトの下マージンを削除
+      text-align: center;        // 文字を中央揃えにする
+      font-family: 'Noto Serif JP', serif; // フォントを指定
+      font-weight: 700;                   // 太さを指定（Bold）
+    }
+  }
+
+// app/assets/stylesheets/graves.scss
+
+// ... 既存のスタイル ...
+
+// リスト全体を囲むコンテナ
+.list-container {
+    border: 1px solid #dee2e6;
+    border-radius: 12px;
+    overflow: hidden; // テーブルの角丸を有効にするため
+  }
+  
+  // テーブルの行
+  .table tbody tr {
+    // align-middleクラスが効かない場合があるためSCSSでも指定
+    vertical-align: middle;
+  }
+  
+  // テーブルのヘッダー
+  .table thead th {
+    background-color: #f8f9fa;
+    border-bottom-width: 1px;
+  }
+  
+  // 画像がない場合のプレースホルダー
+  .list-img-placeholder {
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #e9ecef;
+  }
+  
+  // 名前のリンク
+  .table a {
+    text-decoration: none;
+    color: #1a253a;
+    &:hover {
+      text-decoration: underline;
+    }
+  }

@@ -7,6 +7,14 @@
       <%= @grave.name %>
     </div>
     <div class="card-body">
+
+
+    <% if @grave.main_image.attached? %>
+      <p>
+        <%= image_tag @grave.main_image.variant(resize_to_limit: [400, 400]) %>
+      </p>
+    <% end %>
+
       <p><strong>説明:</strong><br><%= simple_format(@grave.description) %></p>
       <p><strong>都道府県:</strong> <%= @grave.prefecture %></p>
       <p><strong>住所:</strong> <%= @grave.address %></p>

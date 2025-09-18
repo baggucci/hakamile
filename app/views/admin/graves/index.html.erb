@@ -11,6 +11,7 @@
       <tr>
         <th>ID</th>
         <th>名称</th>
+        <th>画像</th>
         <th>都道府県</th>
         <th>登録日時</th>
         <th>ジャンル</th>
@@ -22,6 +23,13 @@
         <tr>
           <td><%= grave.id %></td>
           <td><%= grave.name %></td>
+          <td>
+            <% if grave.main_image.attached? %>
+              <%= image_tag grave.main_image.variant(resize_to_limit: [100, 100]) %>
+            <% else %>
+              <p>画像はありません</p>
+            <% end %>
+          </td>
           <td><%= grave.prefecture %></td>
           <td><%= l grave.created_at, format: :short %></td>
           <td><%= grave.genres.pluck(:name).join(', ') %></td>

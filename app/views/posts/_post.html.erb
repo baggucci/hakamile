@@ -1,0 +1,48 @@
+<%# app/views/posts/_post.html.erb %>
+
+<div class="review-card card mb-4" id="post-<%= post.id %>">
+  <div class="card-body">
+    <%# --- 投稿者情報 --- %>
+    <div class="review-header d-flex align-items-center mb-3">
+      <%= image_tag 'default_avatar.png', class: 'reviewer-avatar' %>
+      <div class="reviewer-info">
+        <span class="reviewer-name"><%= post.user&.name || '退会したユーザー' %></span>
+      </div>
+      <div class="ms-auto text-end">
+        <small class="text-muted"><%= l post.created_at, format: :short %></small>
+      </div>
+    </div>
+
+
+    <%# --- 投稿本文 (150文字で省略し、詳細は個別ページへ) --- %>
+    <div class="review-body mb-3">
+      <div class="text-content">
+        <%# 150文字で省略し、改行も反映させる %>
+        <p><%= simple_format(h(truncate(post.body, length: 150))) %></p>
+      </div>
+      <% if post.body.length > 150 %>
+        <%# 投稿詳細ページへのリンクとして「もっと見る」を設置 %>
+        <%= link_to 'もっと見る', post_path(post), class: 'btn btn-link btn-sm p-0 mt-1' %>
+      <% end %>
+    </div>
+
+    <%# --- 投稿画像 (Retty風: 大サイズ1枚、中サイズ2枚) --- %>
+    <% if post.images.attached? %>
+      <div class="review-images-container d-flex flex-wrap gap-2 mb-3">
+        <% post.images.first(3).each_with_index do |image, index| %>
+          <% if index == 0 %>
+            <%= image_tag image, class: 'review-image review-image-large' %>
+          <% else %>
+            <%= image_tag image, class: 'review-image review-image-medium' %>
+          <% end %>
+        <% end %>
+        <% if post.images.count > 3 %>
+          <div class="review-image-medium more-images-overlay d-flex align-items-center justify-content-center">
+            <span class="text-white fs-5">+<%= post.images.count - 3 %></span>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+
+  </div>
+</div>

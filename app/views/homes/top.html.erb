@@ -79,20 +79,21 @@
                         </div>
                     </div>
             </div>
-            
             <!-- Location Search -->
             <div class="col-lg-4">
                 <div class="search-option-card card h-100 border-0 shadow">
-                    <div class="card-body text-center p-4">
+                    <div class="card-body text-center p-4" data-controller="location-search">
                         <div class="search-icon-circle rounded-circle d-flex align-items-center justify-content-center mx-auto mb-4">
                             <i class="fas fa-location-arrow text-primary-custom fa-2x"></i>
                         </div>
+
                         <h4 class="card-title fw-bold text-primary-custom mb-3">現在地から探す</h4>
                         <p class="card-text text-muted mb-4">
                             GPS機能を使って<br>
                             近くの墓所を検索
                         </p>
-                        <button class="btn btn-gold location-btn" data-action="location-search">
+                        
+                        <button class="btn btn-gold location-btn" data-action="click->location-search#search">
                             <i class="fas fa-crosshairs me-2"></i>位置情報を取得
                         </button>
                     </div>
