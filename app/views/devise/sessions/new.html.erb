@@ -21,6 +21,11 @@
   <div class="actions">
     <%= f.submit "Log in" %>
   </div>
+
+  <div class="row">
+    <%= link_to "ゲストログイン（閲覧用）", users_guest_sign_in_path, class: "sign_in", method: :post %>
+  </div>
+
 <% end %>
 
 <%= render "devise/shared/links" %>

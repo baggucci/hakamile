@@ -74,6 +74,11 @@ Rails.application.routes.draw do
       end
     end
   end
+
+# ゲストユーザー用
+devise_scope :user do
+  post 'users/guest_sign_in', to: 'users/sessions#guest_sign_in'
+end
   
 # 管理者向け機能のURLを /admin/... に統一
 namespace :admin do

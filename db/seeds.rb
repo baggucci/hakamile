@@ -72,4 +72,10 @@ graves_data.each do |data|
 end
 puts '墓所を作成しました。'
 
+
+# ゲストユーザーの作成
+User.guest
+puts "ゲストユーザーを作成しました" # 実行確認用に追記
+
+
 puts '全てのseedデータの投入が完了しました。'
