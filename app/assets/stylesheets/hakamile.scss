@@ -12,11 +12,24 @@
     --transition-normal: all 0.3s ease;
 }
 
+html, body {
+    height: 100%;
+    margin: 0;
+  }
+
 body {
+    display: flex;
+    flex-direction: column; 
+    min-height: 100vh;
+
     font-family: 'Noto Sans JP', sans-serif;
     background-color: var(--light-beige);
     line-height: 1.6;
 }
+
+main {
+    flex: 1;
+  }
 
 .font-serif {
     font-family: 'Noto Serif JP', serif;

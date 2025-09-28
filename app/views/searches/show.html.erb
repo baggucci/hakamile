@@ -1,0 +1,33 @@
+<div class="container mt-4">
+  <h1 class="font-serif">検索結果</h1>
+
+  <%# --- 再検索用のフォーム --- %>
+  <div class="mb-4">
+    <%= search_form_for @q, url: search_path, method: :get, class: "input-group" do |f| %>
+      <%= f.search_field :name_or_prefecture_cont, class: "form-control", placeholder: "再度検索する" %>
+      <%= f.submit "再検索", class: "btn btn-outline-secondary" %>
+    <% end %>
+  </div>
+
+  <%# --- 検索結果の表示 --- %>
+  <div class="grave-list">
+    <% if @graves.any? %>
+      <p class="text-muted"><%= @graves.count %>件のお墓が見つかりました。</p>
+      <% @graves.each do |grave| %>
+        <div class="card mb-3">
+          <div class="card-body">
+            <h5 class="card-title"><%= link_to grave.name, grave_path(grave) %></h5>
+            <p class="card-text"><%= grave.prefecture %><%= grave.address %></p>
+          </div>
+        </div>
+      <% end %>
+    <% else %>
+      <div class="alert alert-warning" role="alert">
+        該当するお墓は見つかりませんでした。
+      </div>
+    <% end %>
+  </div>
+
+  <hr>
+  <%= link_to "お墓リストに戻る", graves_path, class: "btn btn-secondary" %>
+</div>

@@ -1,0 +1,66 @@
+<div class="search-modal-overlay" id="search-modal">
+  <div class="search-modal-content">
+    <%= link_to "javascript:history.back()", class: "search-modal-close" do %>
+      <i class="fas fa-times"></i>
+    <% end %>
+
+    <ul class="nav nav-tabs mb-4" id="searchTab" role="tablist">
+      <li class="nav-item" role="presentation">
+        <button class="nav-link active" id="grave-search-tab" data-bs-toggle="tab" data-bs-target="#grave-search" type="button" role="tab">お墓を探す</button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="user-search-tab" data-bs-toggle="tab" data-bs-target="#user-search" type="button" role="tab">ユーザーを探す</button>
+      </li>
+    </ul>
+
+    <div class="tab-content" id="searchTabContent">
+      
+      <div class="tab-pane fade show active" id="grave-search" role="tabpanel">
+        <h2 class="text-center mb-4 font-serif">お墓を検索</h2>
+        <%= search_form_for @grave_q, url: search_path, method: :get do |f| %>
+          <div class="form-group">
+            <%= f.search_field :name_or_prefecture_cont, 
+                               placeholder: "キーワード（お墓の名前、場所など）", 
+                               class: "form-control form-control-lg", 
+                               autofocus: true %>
+          </div>
+          <%= f.submit "検索", class: "btn btn-gold btn-lg w-100 mt-3" %>
+        <% end %>
+      </div>
+
+      <div class="tab-pane fade" id="user-search" role="tabpanel">
+        <h2 class="text-center mb-4 font-serif">ユーザーを検索</h2>
+        <%= search_form_for @user_q, url: user_search_path, method: :get do |f| %>
+          <div class="form-group">
+            <%= f.search_field :name_cont, 
+                               placeholder: "キーワード（ユーザー名など）", 
+                               class: "form-control form-control-lg" %>
+          </div>
+          <%= f.submit "検索", class: "btn btn-primary btn-lg w-100 mt-3" %>
+        <% end %>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('turbo:load', function() {
+    // 検索モーダル表示時にbodyにクラスを追加
+    document.body.classList.add('search-modal-open');
+
+    // Escapeキーでモーダルを閉じる
+    const handleKeydown = (event) => {
+      if (event.key === "Escape") {
+        window.history.back();
+      }
+    };
+    document.addEventListener('keydown', handleKeydown);
+
+    // ページを離れる際にイベントリスナーを削除
+    document.addEventListener('turbo:before-visit', () => {
+      document.body.classList.remove('search-modal-open');
+      document.removeEventListener('keydown', handleKeydown);
+    }, { once: true });
+  });
+</script>

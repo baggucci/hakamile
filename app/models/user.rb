@@ -28,5 +28,13 @@ class User < ApplicationRecord
   def guest_user?
     email == GUEST_USER_EMAIL
   end
+  
+  def self.ransackable_attributes(auth_object = nil)
+    # ユーザー名などで検索できるようにする
+    ["name"] 
+  end
 
+  def self.ransackable_associations(auth_object = nil)
+    []
+  end
 end

@@ -1,0 +1,36 @@
+<div class="container mt-4">
+  <h1 class="font-serif">ユーザー検索結果</h1>
+
+  <%# --- 再検索用のフォーム --- %>
+  <div class="mb-4">
+    <%= search_form_for @q, url: user_search_path, method: :get, class: "input-group" do |f| %>
+      <%= f.search_field :name_cont, class: "form-control", placeholder: "再度検索する" %>
+      <%= f.submit "再検索", class: "btn btn-outline-secondary" %>
+    <% end %>
+  </div>
+
+  <%# --- 検索結果の表示 --- %>
+  <div class="user-list">
+    <% if @users.any? %>
+      <p class="text-muted"><%= @users.count %>人のユーザーが見つかりました。</p>
+      <% @users.each do |user| %>
+        <div class="card mb-2">
+          <div class="card-body">
+            <%# ユーザー名や詳細へのリンクなどを表示 %>
+            <p class="card-text"><%= user.name %>
+              <%= link_to user.name, user_path(user), class: "text-decoration-none fw-bold" %>
+            </p>
+            
+          </div>
+        </div>
+      <% end %>
+    <% else %>
+      <div class="alert alert-warning" role="alert">
+        該当するユーザーは見つかりませんでした。
+      </div>
+    <% end %>
+  </div>
+
+  <hr>
+  <button onclick="history.back()" class="btn btn-secondary">戻る</button>
+</div>

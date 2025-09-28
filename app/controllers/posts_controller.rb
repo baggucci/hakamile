@@ -7,18 +7,22 @@ class PostsController < ApplicationController
   def index
         # 公開されている投稿を新しい順にすべて取得
         @posts = Post.where(status: :published).order(created_at: :desc)
-
   end
 
   def show
     @post = Post.find(params[:id])
     @comment = Comment.new  
-
   end
 
   def new
-    @grave = Grave.find(params[:grave_id]) # リンクから渡されたgrave_idを受け取る
-    @post = Post.new
+    if params[:grave_id].present?
+      @grave = Grave.find(params[:grave_id])
+      @post = Post.new(grave: @grave)
+    else
+      @post = Post.new
+      @graves = Grave.all 
+
+    end
   end
   
   def edit
@@ -56,11 +60,15 @@ class PostsController < ApplicationController
     redirect_to posts_path, notice: "投稿を削除しました。"
   end
 
+  def liked
+    @liked_posts = current_user.liked_posts.order(created_at: :desc)
+  end
+
   private
 
   # Strong Parameters
   def post_params
-    params.require(:post).permit(:title, :body, :grave_id, :status, :images[])
+    params.require(:post).permit(:title, :body, :grave_id, :status, images:[])
   end
   
   # 対象の投稿データを取得する

@@ -31,7 +31,8 @@ gem 'bootsnap', '>= 1.4.4', require: false
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
-  gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
+  gem 'byebug'
+  gem 'pry-rails'
 end
 
 group :development do
@@ -72,7 +73,7 @@ gem "net-imap"
 gem 'image_processing', '~> 1.2' # 画像処理用
 gem 'geocoder' # 位置情報検索用
 gem 'geokit-rails'# 位置情報検索用
-
 gem 'kaminari' # ページネーション用
-
 gem "enum_help"
+gem 'ransack'
+gem 'turbo-rails'

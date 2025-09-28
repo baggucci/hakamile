@@ -1,0 +1,18 @@
+<div class="container mt-4">
+  <h1 class="font-serif">ユーザー検索結果</h1>
+
+  <% if @users.any? %>
+    <p><%= @users.count %>人のユーザーが見つかりました。</p>
+    <% @users.each do |user| %>
+      <div class="card mb-2">
+        <div class="card-body">
+          <%= user.username %> <%# または user.name など %>
+        </div>
+      </div>
+    <% end %>
+  <% else %>
+    <p>該当するユーザーは見つかりませんでした。</p>
+  <% end %>
+
+  <%= link_to "戻る", :back, class: "btn btn-secondary mt-3" %>
+</div>

@@ -2,7 +2,11 @@
   <div class="row justify-content-center">
     <div class="col-md-8">
       <h2 class="text-center mb-4">
-        <%= @grave.name %> への墓参日記
+        <% if @grave.present? %>
+          <%= @grave.name %> への墓参日記
+        <% else %>
+          墓参日記を投稿
+        <% end %>
       </h2>
       
       <div class="card">
@@ -12,8 +16,11 @@
       </div>
       
       <div class="text-center mt-3">
+      <% if @grave.present? %>
         <%= link_to '戻る', grave_path(@grave), class: 'btn btn-secondary' %>
-      </div>
+      <% else %>
+        <%= link_to '戻る', posts_path, class: 'btn btn-secondary' %>
+      <% end %>
     </div>
   </div>
 </div>

@@ -1,4 +1,17 @@
 class Grave < ApplicationRecord
+
+    # Ransackが検索できるカラムのリストを定義します
+    def self.ransackable_attributes(auth_object = nil)
+        # ここに、ユーザーに検索を許可したいカラム名を文字列の配列として記述します
+        # 今回エラーが出ている :name_or_prefecture に合わせて "name" と "prefecture" を含めます
+        ["name", "prefecture", "description", "address"]
+    end
+
+    # (任意) Ransackが検索できる関連モデルのリストを定義します
+    def self.ransackable_associations(auth_object = nil)
+        # 例えばUserモデルやCommentモデルを関連検索したい場合に記述します
+        [] # 今は空でOK
+    end
     
     # 中間テーブル(grave_genres)を介して、多数のGenreを持つ
     has_many :grave_genres, dependent: :destroy

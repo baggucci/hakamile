@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'searches/show'
   get 'likes/create'
   get 'likes/destroy'
   namespace :admin do
@@ -31,7 +32,6 @@ Rails.application.routes.draw do
   end
   get 'graves/index'
   get 'graves/show'
-# devise_for :admins #ここは削除
   devise_for :admin, skip: [:registrations, :password], controllers: {
     sessions: 'admin/sessions'
   }
@@ -41,9 +41,9 @@ Rails.application.routes.draw do
   get 'inquiries/complete' => 'inquiries#complete'
   
   devise_for :users
-  resources :posts
   resources :graves, only: [:index, :show,]  # 墓所管理
   resources :inquiries, only: [:new, :create]
+  resources :users, only: [:show] # ユーザー詳細ページ用のルート
 
 
   # --- ここからマイページ関連のルートを追加 ---
@@ -53,11 +53,11 @@ Rails.application.routes.draw do
   # --- ここまで ---
 
   resources :posts do
-    # ↓ postsリソースの中にcommentsリソースをネストさせる
+    collection do
+      get :liked
+    end   
     resources :comments, only: [:create, :destroy]
-    # resources :reports, only: [:new, :create]
-    resource :likes, only: [:create, :destroy] # favorites を likes に変更
-    
+    resources :likes, only: [:create, :destroy] 
   end
 
   resources :posts, only: [:index] # 投稿一覧のみ独立させる
@@ -67,13 +67,14 @@ Rails.application.routes.draw do
     # graveにネストさせる形でcommentsのルーティングを追加
     resources :comments, only: [:create, :destroy]
     resources :reports, only: [:new, :create]
-    resources :posts, only: [:new, :create, :show, :edit, :update, :destroy], shallow: true
-    resources :graves do
-      collection do
-        get 'search' # graves/search というURLでアクセスできるようにする
-      end
-    end
+    resources :posts, only: [:new, :create, :show, :edit, :update, :destroy], shallow: true     
+    
   end
+
+  # --- 検索ページ ---
+  resource :search, only: [:new, :show], controller: 'searches'
+  resource :user_search, only: [:show], controller: 'user_searches'
+
 
 # ゲストユーザー用
 devise_scope :user do

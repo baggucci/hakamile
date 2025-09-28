@@ -1,17 +1,17 @@
 class GravesController < ApplicationController
   def index
     @graves = Grave.all
-
+    @q = Grave.ransack(params[:q])   
+     
     # ヘッダーのキーワード検索をqueryパラメーターで処理
-    if params[:query].present?
-      @graves = Grave.where('name LIKE ?', "%#{params[:query]}%")
-    else
-      @graves = Grave.all
-    end    
-    
-    if params[:search].present?
-      @graves = @graves.where("name LIKE ?", "%#{params[:search]}%")
-    end
+    # if params[:query].present?
+    #   @graves = Grave.where('name LIKE ?', "%#{params[:query]}%")
+    # else
+    #   @graves = Grave.all
+    # end       
+    # if params[:search].present?
+    #   @graves = @graves.where("name LIKE ?", "%#{params[:search]}%")
+    # end
     
     # ジャンル検索
     if params[:genre_name].present?
@@ -36,7 +36,7 @@ class GravesController < ApplicationController
   end
   
   def show
-      @post = Post.new  # 👈 この行を追加、または確認してください
+      @post = Post.new 
       @grave = Grave.find(params[:id])
       @posts = @grave.posts.includes(:user).order(created_at: :desc)
       @comment = Comment.new 
@@ -47,23 +47,28 @@ class GravesController < ApplicationController
   end
 
   def search
-      latitude = params[:latitude]
-      longitude = params[:longitude]
-  
-      if latitude.present? && longitude.present?
-        # Geocoderのnearメソッドで近くの墓所を検索します (例: 10km以内)
-        # @graves = Grave.near([latitude, longitude], 10, units: :km)
+    # Ransackの検索オブジェクトを生成する (キーワード検索の準備)
+      @q = Grave.ransack(params[:q])
+      @graves = @q.result(distinct: true)
+    # app/views/graves/search.html.erb を表示
+    render :search
+  end
 
-        # Geokitのwithinメソッドで近くの墓所を検索します (例: 10km以内)
-        @graves = Grave.within(100, origin: [latitude, longitude])
+  def nearby
+    latitude = params[:latitude]
+    longitude = params[:longitude]
 
-      else
-        @graves = Grave.all
-        flash.now[:alert] = "位置情報が取得できませんでした。"
-      end
-      
-      # index.html.erb などのビューを使って検索結果を表示します
-      render :index
+    if latitude.present? && longitude.present?
+      # Geokitのwithinメソッドで近くの墓所を検索
+      @graves = Grave.within(100, origin: [latitude, longitude])
+    else
+      # 位置情報がない場合は結果を空にする
+      @graves = [] 
+      flash.now[:alert] = "位置情報が取得できませんでした。"
+    end
+    
+    # app/views/graves/nearby.html.erb を表示
+    render :nearby
   end
 
   private

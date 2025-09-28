@@ -51,10 +51,9 @@
 <%# --- 投稿機能セクション --- %>
 <section class="new-post-section mb-5 text-center">
   <% if user_signed_in? %>
-    <%# モーダルを開くためのボタン（これは残す） %>
-    <button type="button" class="btn btn-primary btn-lg" data-bs-toggle="modal" data-bs-target="#newPostModal">
+    <%= link_to new_post_path, class: "btn btn-primary btn-lg" do %>
       <i class="fas fa-camera"></i> 墓参日記を投稿する
-    </button>
+    <% end %>
   <% else %>
     <p>墓参日記を投稿するには、<%= link_to "ログイン", new_user_session_path %>が必要です。</p>
   <% end %>
