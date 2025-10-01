@@ -1,0 +1,17 @@
+<%# 自分自身のボタンは表示しない %>
+<% if current_user != user %>
+  <div id="follow_form_<%= user.id %>">
+    <% if current_user.following?(user) %>
+      <%# フォロー済みなら「フォロー解除」ボタン %>
+      <%= form_with(model: current_user.active_relationships.find_by(followed_id: user.id), method: :delete, local: false) do |f| %>
+        <%= f.submit "フォロー解除", class: 'btn btn-danger btn-sm' %>
+      <% end %>
+    <% else %>
+      <%# 未フォローなら「フォローする」ボタン %>
+      <%= form_with(model: current_user.active_relationships.build, url: relationships_path, local: false) do |f| %>
+        <%= f.hidden_field :followed_id, value: user.id %>
+        <%= f.submit "フォローする", class: 'btn btn-primary btn-sm' %>
+      <% end %>
+    <% end %>
+  </div>
+<% end %>

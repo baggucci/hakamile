@@ -1,0 +1,3 @@
+document.getElementById('stats_<%= @user.id %>').innerHTML = '<%= j(render "users/stats", user: @user) %>';
+
+document.getElementById('follow_form_<%= @user.id %>').innerHTML = '<%= j(render "users/follow_unfollow_button", user: @user) %>';

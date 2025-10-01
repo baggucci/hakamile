@@ -47,16 +47,16 @@ puts 'ジャンルを作成しました。'
 # ----------------------------------------------------------------
 puts '墓所を作成中...'
 graves_data = [
-  { name: '坂本龍馬', prefecture: '高知県', address: '高知市山の端', description: '幕末の志士、坂本龍馬の墓所。', latitude: 33.5713, longitude: 133.5385, genre_obj: genre_meiji },
-  { name: '織田信長', prefecture: '京都府', address: '京都市上京区', description: '戦国時代の武将、織田信長の廟所。', latitude: 35.027, longitude: 135.755, genre_obj: genre_shogun },
-  { name: '徳川家康', prefecture: '静岡県', address: '静岡市駿河区', description: '江戸幕府初代将軍、徳川家康の墓所。', latitude: 34.9756, longitude: 138.3828, genre_obj: genre_shogun },
-  { name: '伊達政宗', prefecture: '宮城県', address: '仙台市青葉区', description: '仙台藩初代藩主、伊達政宗の霊屋。', latitude: 38.2575, longitude: 140.8679, genre_obj: genre_shogun },
-  { name: '武田信玄', prefecture: '山梨県', address: '甲府市', description: '甲斐の戦国大名、武田信玄の墓所。', latitude: 35.662, longitude: 138.5684, genre_obj: genre_shogun },
-  { name: '上杉謙信', prefecture: '新潟県', address: '上越市', description: '越後の戦国大名、上杉謙信の墓所。', latitude: 37.1069, longitude: 138.2435, genre_obj: genre_shogun },
-  { name: '豊臣秀吉', prefecture: '京都府', address: '京都市東山区', description: '安土桃山時代の武将、豊臣秀吉の廟所。', latitude: 34.9942, longitude: 135.7788, genre_obj: genre_shogun },
-  { name: '宮本武蔵', prefecture: '熊本県', address: '熊本市中央区', description: '江戸時代初期の剣術家、宮本武蔵の墓。', latitude: 32.8032, longitude: 130.7079, genre_obj: genre_history },
-  { name: '西郷隆盛', prefecture: '鹿児島県', address: '鹿児島市', description: '明治維新の指導者、西郷隆盛の墓。', latitude: 31.5964, longitude: 130.5543, genre_obj: genre_meiji },
-  { name: '吉田松陰', prefecture: '東京都', address: '世田谷区', description: '幕末の思想家、吉田松陰の墓。', latitude: 35.6623, longitude: 139.6646, genre_obj: genre_meiji }
+  { name: '坂本龍馬', prefecture: '高知県', address: '高知市山の端', description: '幕末の志士、坂本龍馬の墓所。', latitude: 33.5713, longitude: 133.5385, genre_obj: genre_meiji, image_filename: 'sakamoto_ryoma.jpg' },
+  { name: '織田信長', prefecture: '京都府', address: '京都市上京区', description: '戦国時代の武将、織田信長の廟所。', latitude: 35.027, longitude: 135.755, genre_obj: genre_shogun, image_filename: 'oda_nobunaga.jpg' },
+  { name: '徳川家康', prefecture: '静岡県', address: '静岡市駿河区', description: '江戸幕府初代将軍、徳川家康の墓所。', latitude: 34.9756, longitude: 138.3828, genre_obj: genre_shogun, image_filename: 'tokugawa_ieyasu.jpg' },
+  { name: '伊達政宗', prefecture: '宮城県', address: '仙台市青葉区', description: '仙台藩初代藩主、伊達政宗の霊屋。', latitude: 38.2575, longitude: 140.8679, genre_obj: genre_shogun, image_filename: 'date_masamune.jpg' },
+  { name: '武田信玄', prefecture: '山梨県', address: '甲府市', description: '甲斐の戦国大名、武田信玄の墓所。', latitude: 35.662, longitude: 138.5684, genre_obj: genre_shogun, image_filename: 'takeda_shingen.jpg' },
+  { name: '上杉謙信', prefecture: '新潟県', address: '上越市', description: '越後の戦国大名、上杉謙信の墓所。', latitude: 37.1069, longitude: 138.2435, genre_obj: genre_shogun, image_filename: 'uesugi_kenshin.jpg' },
+  { name: '豊臣秀吉', prefecture: '京都府', address: '京都市東山区', description: '安土桃山時代の武将、豊臣秀吉の廟所。', latitude: 34.9942, longitude: 135.7788, genre_obj: genre_shogun, image_filename: 'toyotomi_hideyoshi.jpg' },
+  { name: '宮本武蔵', prefecture: '熊本県', address: '熊本市中央区', description: '江戸時代初期の剣術家、宮本武蔵の墓。', latitude: 32.8032, longitude: 130.7079, genre_obj: genre_history, image_filename: 'miyamoto_musashi.jpg' },
+  { name: '西郷隆盛', prefecture: '鹿児島県', address: '鹿児島市', description: '明治維新の指導者、西郷隆盛の墓。', latitude: 31.5964, longitude: 130.5543, genre_obj: genre_meiji, image_filename: 'saigo_takamori.jpg' },
+  { name: '吉田松陰', prefecture: '東京都', address: '世田谷区', description: '幕末の思想家、吉田松陰の墓。', latitude: 35.6623, longitude: 139.6646, genre_obj: genre_meiji, image_filename: 'yoshida_shoin.jpg' }
 ]
 
 graves_data.each do |data|
@@ -67,8 +67,27 @@ graves_data.each do |data|
     g.latitude = data[:latitude]
     g.longitude = data[:longitude]
   end
-  # 中間テーブルには、dataハッシュから取り出したgenreオブジェクトを渡す
+  
+  # 中間テーブルの処理
   GraveGenre.find_or_create_by!(grave: grave, genre: data[:genre_obj])
+  
+  # 画像がまだ添付されていない場合のみ、処理を実行する
+  unless grave.main_image.attached?
+    # 画像ファイルのフルパスを取得
+    image_path = Rails.root.join('db', 'seed_images', data[:image_filename])
+    
+    # ファイルが存在するか確認
+    if File.exist?(image_path)
+      # ファイルを開いて画像を添付
+      grave.main_image.attach(
+        io: File.open(image_path),
+        filename: data[:image_filename],
+        content_type: 'image/jpeg' # 画像の形式に合わせて変更してください
+      )
+    else
+      puts "画像ファイルが見つかりません: #{image_path}"
+    end
+  end
 end
 puts '墓所を作成しました。'
 

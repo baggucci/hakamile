@@ -1,7 +1,7 @@
 class GravesController < ApplicationController
   def index
-    @graves = Grave.all
-    @q = Grave.ransack(params[:q])   
+    @q = Grave.ransack(params[:q])
+    @graves = @q.result(distinct: true)
      
     # ヘッダーのキーワード検索をqueryパラメーターで処理
     # if params[:query].present?

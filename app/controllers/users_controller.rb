@@ -40,6 +40,17 @@ class UsersController < ApplicationController
       redirect_to root_path, notice: 'ゲストユーザーとしてログインしました。'
     end
 
+    # フォロー/フォロワーの一覧を表示するためのアクション
+    def following
+      @user  = User.find(params[:id])
+      @users = @user.following
+    end
+  
+    def followers
+      @user  = User.find(params[:id])
+      @users = @user.followers
+    end
+  
     private
   
     def set_current_user

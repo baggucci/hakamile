@@ -1,0 +1,43 @@
+<div class="card shadow-sm h-100"> 
+  <%# --- 1. 写真（3枚まで）--- %>
+  <% if post.images.attached? %>
+    <div class="row g-1 px-2 pt-2">
+      <%# 3枚だけ取り出してループ処理 %>
+      <% post.images.first(3).each do |image| %>
+        <div class="col-4">
+          <%# 投稿詳細ページへのリンクにする %>
+          <%= link_to post do %>
+            <%= image_tag image.variant(resize_to_fill: [200, 200]), class: 'img-fluid rounded' %>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+
+  <%# --- カード本文エリア --- %>
+  <div class="card-body">
+    <%# 1. 墓所名 %>
+    <p class="text-muted small mb-1">
+      <%= link_to "#{post.grave&.name || '不明な場所'}のお墓", post, class: 'text-muted text-decoration-none' %>
+    </p>
+
+    <%# 2. Postのタイトル %>
+    <h5 class="fw-bold">
+      <%= link_to post.title, post, class: 'text-dark text-decoration-none' %>
+    </h5>
+    
+    <%# --- 3. 投稿本文（120字で省略） --- %>
+    <p class="card-text">
+      <%= truncate(post.body, length: 60) %>
+      <% if post.body.length > 120 %>
+        <%= link_to 'もっとみる', post, class: 'text-muted' %>
+      <% end %>
+    </p>
+
+    <%# --- 4. ユーザー名 --- %>
+    <div class="d-flex align-items-center mt-3">
+      <%= image_tag 'default_avatar.png', class: 'post-author-avatar me-2' %>
+      <span class="text-muted small"><%= post.user&.name || '匿名' %></span>
+    </div>
+  </div>
+</div>

@@ -16,13 +16,14 @@
                 
                 <!-- Search Bar -->
                 <div class="row justify-content-center">
-                    <div class="col-lg-10">
-                        <%= form_with url: graves_path, method: :get, local: true, class: "input-group input-group-lg" do |form| %>
-                            <%= form.text_field :search, placeholder: "故人名を入力してください（例：夏目漱石、手塚治虫）", class: "form-control search-input" %>
-                            <%= form.submit "検索", class: "btn search-btn px-4" %>
-                        <% end %>
-                    </div>
-
+                  <div class="col-lg-10">
+                    <%= search_form_for @q, url: search_path, method: :get, html: { class: "input-group input-group-lg" } do |f| %>
+                      <%= f.search_field :name_cont,
+                                         placeholder: "故人名を入力してください（例：夏目漱石、手塚治虫）",
+                                         class: "form-control search-input" %>
+                      <%= f.submit "検索", class: "btn search-btn px-4" %>
+                    <% end %>
+                  </div>
                 </div>
                 </div>
             </div>
@@ -50,7 +51,7 @@
                             <div class="d-flex flex-wrap gap-2 justify-content-center">
 
                             <% @genres.each do |genre| %>
-                              <%= link_to genre.name, graves_path(genre_name: genre.name), class: "category-badge badge" %>
+                              <%= link_to genre.name, search_path(genre_name: genre.name), class: "category-badge badge" %>
                             <% end %>
 
                             </div>
@@ -71,10 +72,10 @@
                                 お住まいの地域から検索
                             </p>
                             <div class="d-flex flex-wrap gap-2 justify-content-center">
-                                <%= link_to "東京都", graves_path(prefecture: "東京都"), class: "category-badge badge" %>
-                                <%= link_to "京都府", graves_path(prefecture: "京都府"), class: "category-badge badge" %>
-                                <%= link_to "大阪府", graves_path(prefecture: "大阪府"), class: "category-badge badge" %>
-                                <%= link_to "福岡県", graves_path(prefecture: "福岡県"), class: "category-badge badge" %>
+                                <%= link_to "東京都", search_path(prefecture: "東京都"), class: "category-badge badge" %>
+                                <%= link_to "京都府", search_path(prefecture: "京都府"), class: "category-badge badge" %>
+                                <%= link_to "大阪府", search_path(prefecture: "大阪府"), class: "category-badge badge" %>
+                                <%= link_to "福岡県", search_path(prefecture: "福岡県"), class: "category-badge badge" %>
                             </div>
                         </div>
                     </div>
@@ -104,91 +105,17 @@
 </section>
 
 <!-- Latest Posts Section (投稿がある場合のみ表示) -->
-<% if @recent_posts&.any? %>
-<section class="py-5 bg-light">
-    <div class="container">
-        <div class="d-flex justify-content-between align-items-center mb-5">
-            <h3 class="font-serif fw-bold text-primary-custom display-6">最新の墓参り記録</h3>
-            <%= link_to posts_path, class: "text-gold text-decoration-none fw-medium view-all-link" do %>
-                すべて見る <i class="fas fa-arrow-right ms-1"></i>
-            <% end %>
-        </div>
-        
-        <div class="row g-4">
-            <% @recent_posts.each do |post| %>
-                <div class="col-sm-6 col-lg-3">
-                    <%= link_to post_path(post), class: "text-decoration-none" do %>
-                        <div class="post-card card border-0 shadow">
-                            <div class="post-image card-img-top d-flex align-items-center justify-content-center">
-                                <% if post.respond_to?(:image) && post.image.present? %>
-                                    <%= image_tag post.image, class: "img-fluid", style: "height: 200px; object-fit: cover;" %>
-                                <% else %>
-                                    <i class="fas fa-image fa-3x text-muted"></i>
-                                <% end %>
-                            </div>
-                            <div class="card-body">
-                                <h5 class="card-title fw-bold text-primary-custom">
-                                    <%= post.grave&.name || "投稿" %>
-                                </h5>
-                                <p class="card-text small text-muted mb-3">
-                                    <% if post.grave %>
-                                        <%= "#{post.grave.address}（#{post.grave.prefecture}）" %>
-                                    <% else %>
-                                        場所未設定
-                                    <% end %>
-                                </p>
-                                
-                                <div class="user-info d-flex align-items-center mb-3">
-                                    <div class="user-avatar rounded-circle me-3"></div>
-                                    <div>
-                                        <p class="small fw-medium mb-0 text-primary-custom">
-                                            <%= post.user&.name || post.user&.email&.split('@')&.first || "ユーザー" %>
-                                        </p>
-                                        <p class="small text-muted mb-0">
-                                            <%= time_ago_in_words(post.created_at) %>前
-                                        </p>
-                                    </div>
-                                </div>
-                                
-                                <p class="card-text small text-muted mb-3">
-                                    <%= truncate(post.body, length: 60) if post.body %>
-                                </p>
-                                
-                                <div class="post-stats d-flex align-items-center small text-muted">
-                                    <i class="fas fa-heart me-1"></i><%= post.respond_to?(:likes_count) ? (post.likes_count || 0) : rand(5..30) %>
-                                    <i class="fas fa-comment ms-4 me-1"></i><%= post.respond_to?(:comments_count) ? (post.comments_count || 0) : rand(0..10) %>
-                                </div>
-                            </div>
-                        </div>
-                    <% end %>
-                </div>
-            <% end %>
-        </div>
-    </div>
-</section>
-<% end %>
+<div class="container-fluid my-5 px-md-5"> <%# container-fluidに変更し、左右のパディングを追加 %>
+  <h2 class="text-center mb-4">最新の記録</h2>
+  <div class="row">
+    <% @posts.each do |post| %>
+      <div class="col-12 col-md-4 mb-4">
+        <%= render 'posts/post_card', post: post %>
+      </div>
+    <% end %>
+  </div>
+</div>
 
-<!-- Popular Categories -->
-<section class="py-5 bg-beige">
-    <div class="container">
-        <h3 class="text-center font-serif fw-bold text-primary-custom mb-5 display-6">人気のカテゴリー</h3>
-        <div class="row g-4">
-            <% @popular_categories.each do |category| %>
-                <div class="col-sm-6 col-lg-3">
-                    <%= link_to graves_path(category: category[:slug]), class: "text-decoration-none" do %>
-                        <div class="category-card card border-0 shadow text-center">
-                            <div class="card-body p-4">
-                                <i class="<%= category[:icon] %> category-icon text-gold mb-3"></i>
-                                <h4 class="fw-bold text-primary-custom mb-2"><%= category[:name] %></h4>
-                                <p class="text-muted small"><%= category[:count] %>件</p>
-                            </div>
-                        </div>
-                    <% end %>
-                </div>
-            <% end %>
-        </div>
-    </div>
-</section>
 
 <!-- Call to Action -->
 <section class="cta-section py-5 text-center">
@@ -201,9 +128,9 @@
                     <%= link_to new_user_registration_path, class: "btn btn-gold btn-lg cta-btn-primary" do %>
                         <i class="fas fa-user-plus me-2"></i>無料で始める
                     <% end %>
-                    <button class="btn btn-outline-light btn-lg cta-btn-secondary">
+                   <%= link_to about_path, class: "btn btn-outline-light btn-lg cta-btn-secondary" do %>
                         <i class="fas fa-info-circle me-2"></i>詳しく見る
-                    </button>
+                    <% end %>
                 </div>
             </div>
         </div>

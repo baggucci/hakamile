@@ -9,6 +9,18 @@
       <hr>
       <p><%= simple_format(@post.body) %></p>
 
+      <%# --- 画像表示エリア --- %>
+      <%# 画像が添付されているかを確認 %>
+      <% if @post.images.attached? %>
+        <div class="post-images">
+          <%# 添付されている画像を1枚ずつ取り出して表示 %>
+          <% @post.images.each do |image| %>
+            <%# image_tagで画像を表示。variantでサイズを調整するのがおすすめ %>
+            <%= image_tag image.variant(resize_to_limit: [500, 500]) %>
+          <% end %>
+        </div>
+      <% end %>
+
       <%# --- ここからいいねボタンを追加 --- %>
       <div class="like-section my-3" id="like-button-<%= @post.id %>">
         <%= render 'likes/like_button', post: @post %>

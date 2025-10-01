@@ -32,6 +32,12 @@
     <%= f.select :status, Post.statuses.keys.map { |k| [I18n.t("enums.post.status.#{k}"), k] }, {}, class: "form-control" %>
   </div>
 
+  <div class="field">
+    <%= f.label :images, '画像' %>
+    <%# multiple: true で複数ファイルの選択を許可する %>
+    <%= f.file_field :images, multiple: true %>
+  </div>
+
   <div class="form-group">
     <%= f.submit class: "btn btn-primary" %>
   </div>

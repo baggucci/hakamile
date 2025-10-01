@@ -1,0 +1,8 @@
+<% @users.each do |user| %>
+    <div>
+      <p><strong><%= user.name %></strong></p>
+      <%= render 'users/stats', user: user %>
+      <%= render 'users/follow_unfollow_button', user: user %>
+    </div>
+    <hr>
+  <% end %>

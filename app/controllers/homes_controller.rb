@@ -7,17 +7,18 @@ class HomesController < ApplicationController
       @recent_posts = []
     end
     
-    @popular_categories = [
-      { name: '文学者', icon: 'fas fa-feather', count: 2341, slug: 'literature' },
-      { name: '芸能人', icon: 'fas fa-masks-theater', count: 1876, slug: 'entertainment' },
-      { name: '政治家', icon: 'fas fa-landmark', count: 1234, slug: 'politics' },
-      { name: 'スポーツ選手', icon: 'fas fa-running', count: 987, slug: 'sports' }
-    ]
   end
   
   def top
-    # topアクションも同様に処理
+    
+    # 検索バー用（Ransack）
+    @q = Grave.ransack(params[:q])
+
+    # ジャンル一覧
     @genres = Genre.all
+
+    # 投稿一覧（画像つき）
+    @posts = Post.with_attached_images.order(created_at: :desc).limit(6)
 
     begin
       @recent_posts = Post.includes(:user, :grave).order(created_at: :desc).limit(4)
@@ -25,12 +26,6 @@ class HomesController < ApplicationController
       @recent_posts = []
     end
     
-    @popular_categories = [
-      { name: '文学者', icon: 'fas fa-feather', count: 2341, slug: 'literature' },
-      { name: '芸能人', icon: 'fas fa-masks-theater', count: 1876, slug: 'entertainment' },
-      { name: '政治家', icon: 'fas fa-landmark', count: 1234, slug: 'politics' },
-      { name: 'スポーツ選手', icon: 'fas fa-running', count: 987, slug: 'sports' }
-    ]
   end
 
   def contact

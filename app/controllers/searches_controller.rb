@@ -16,6 +16,14 @@ class SearchesController < ApplicationController
     @graves = @q.result(distinct: true)
     @users = @q.result(distinct: true)
 
+    if params[:genre_name].present?
+      @graves = @graves.joins(:genres).where(genres: { name: params[:genre_name] })
+    end
+
+    if params[:prefecture].present?
+      @graves = @graves.where(prefecture: params[:prefecture])
+    end
+
   end
 
 end
