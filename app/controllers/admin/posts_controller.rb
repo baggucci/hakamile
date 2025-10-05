@@ -6,6 +6,10 @@ class Admin::PostsController < Admin::BaseController
 
   def show
     @post = Post.find(params[:id])
+    @comment = Comment.new
+    @comments = @post.comments
+    render 'posts/show' 
+
   end
 
   def destroy

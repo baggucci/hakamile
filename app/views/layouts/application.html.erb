@@ -23,6 +23,7 @@
   <body class="bg-beige <%= 'top-page' if current_page?(root_path) %>">
     <!-- Header with Bootstrap styling -->
     <header class="navbar-dark-custom shadow-lg sticky-top">
+
       <div class="container">
         <nav class="navbar navbar-expand-lg navbar-dark">
           <div class="container-fluid">
@@ -77,6 +78,13 @@
           </div>
         </nav>
       </div>
+
+
+      <%# 2. 管理者でログインしている時だけ、サブヘッダーを読み込む %>
+      <% if admin_signed_in? %>
+        <%= render 'layouts/admin_header' %>
+      <% end %>
+      
     </header>
 
     <!-- Flash messages with Bootstrap alerts -->

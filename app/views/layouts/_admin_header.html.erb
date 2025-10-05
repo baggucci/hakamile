@@ -1,0 +1,29 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+  <div class="container-fluid">
+    <span class="navbar-text fw-bold me-3">
+      管理者メニュー:
+    </span>
+    <div class="collapse navbar-collapse" id="adminNavbar">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <%= link_to "会員一覧", admin_users_path, class: "nav-link" %>
+        </li>
+        <li class="nav-item">
+          <%= link_to "投稿一覧", admin_posts_path, class: "nav-link" %>
+        </li>
+        <li class="nav-item">
+          <%= link_to "コメント一覧", admin_comments_path, class: "nav-link" %>
+        </li>
+        <li class="nav-item">
+          <%= link_to "墓所一覧", admin_graves_path, class: "nav-link" %>
+        </li>
+        <li class="nav-item">
+          <%= link_to "ジャンル一覧", admin_genres_path, class: "nav-link" %>
+        </li>
+        <li class="nav-item">
+          <%= link_to "通報一覧", admin_inquiries_path, class: "nav-link" %>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>

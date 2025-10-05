@@ -55,7 +55,9 @@
                 <% else %>
                   <div class="d-grid">
                     <%# 部分テンプレートを呼び出す %>
-                    <%= render 'users/follow_unfollow_button', user: @user %>
+                      <% if current_user %>
+                        <%= render 'users/follow_unfollow_button', user: user %>
+                      <% end %>
                   </div>
                 <% end %>
 
