@@ -15,6 +15,8 @@ class UsersController < ApplicationController
     # GET /mypage/edit
     # プロフィール編集フォームを表示
     def edit
+      @user = current_user
+
       # @userにはログイン中のユーザー情報がセットされている
     end
   
@@ -62,7 +64,7 @@ class UsersController < ApplicationController
     end
 
     def ensure_guest_user
-      @user = User.find(params[:id])
+#      @user = User.find(params[:id])
       if @user.guest_user?
         redirect_to user_path(current_user) , notice: "ゲストユーザーはプロフィール編集画面へ遷移できません。"
       end

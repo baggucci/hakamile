@@ -1,0 +1,1000 @@
+    5  ruby type.rb
+    6  ruby age.rb
+    7  ssh-keygen
+    8  .ssh
+    9  ls ~/.ssh
+   10  ls ~/.ssh/id_rsa.pub
+   11  cat ~/.ssh/id_rsa.pub
+   12  sh -T git@github.com
+   13  ssh -T git@github.com
+   14  mkdir sites
+   15  cd sites
+   16  git init
+   17  ls -a
+   18  git status
+   19   touch README.md
+   20  git status
+   21  git add README.md
+   22  git commit
+   23   git commit -m "Initial Commit1"
+   24  git status
+   25   git diff
+   26  echo "# sites" >> README.md
+   27   git diff
+   28  git commit -m "Initial Commit2"
+   29   git diff
+   30  git add README.md
+   31  git commit -m "Initial Commit2"
+   32   git diff
+   33  git log
+   34  git reset HEAD^
+   35  git log
+   36  git add README.md
+   37  git commit -m "Initial Commit3"
+   38  git log
+   39  pwd
+   40  git remote -v
+   41  git remote add origin git@github.com:baggucci/git-practice.git
+   42  git remote -v
+   43  git branch -M main
+   44  git push origin main
+   45  rails -v
+   46  node -v
+   47  yarn -v
+   48  sqlite --version
+   49  sqlite3 --version
+   50  rails new first_app
+   51  rails s -p 8080
+   52  cd first_app
+   53  yarn add @babel/plugin-proposal-private-methods @babel/plugin-proposal-private-property-in-object
+   54  rails s -p 8080
+   55  rails s 
+   56   rails g controler homes
+   57  rails g controller homus
+   58  rails s 
+   59  rails g controller
+   60  spring stop
+   61  bundle install
+   62  rails c
+   63  rails g controller
+   64  rails g controller homes
+   65  rails s -p 8080
+   66  rails g model List
+   67  rails s
+   68  rails db:migrate
+   69   rails g migration AddNameToLists name:string
+   70  rails db:migrate
+   71  rails g migration RemoveNameFromLists name:string
+   72  rails db:migrate
+   73  $ rails db:migrate:status
+   74  rails db:migrate:status
+   75  rails db:migrate:reset
+   76  rails db:migrate:status
+   77  rails db:rollback
+   78  rails db:migrate:status
+   79  rails db:migrate
+   80  rails routes
+   81   git --version
+   82  git config --global init.defaultBranch main
+   83  rails new sample_app
+   84  cd sample_app
+   85  yarn add @babel/plugin-proposal-private-methods @babel/plugin-proposal-private-property-in-object
+   86  rails -p 8080
+   87  rails s -p 8080
+   88  rails g model TaskList
+   89  rails g model List > output.txt 2>&1
+   90  spring stop
+   91  bundle install
+   92  rails c
+   93  cd ../
+   94  rm -rf sample_app
+   95  rails new sample_app
+   96  spring stop
+   97  bundle install
+   98  cd sample_app
+   99  spring stop
+  100  bundle install
+  101  rails c
+  102  yarn add @babel/plugin-proposal-private-methods @babel/plugin-proposal-private-property-in-object
+  103  rails s -p 8080
+  104  rails g model List
+  105  rails db:migrate
+  106  rails g controller homes top
+  107  rails s -p 8080
+  108  rails g controller lists new index show edit
+  109  rails s
+  110  rails s -p 8080
+  111  cd sample_app
+  112  rails s -p 8080
+  113  rails s
+  114  cd sample_app
+  115  rails s -p 8080
+  116  rails s
+  117  rails active_storage:install
+  118  rails db:migrate
+  119  cd sample_app
+  120  rails s -p 8080
+  121  cd sample_app
+  122  rails routes
+  123  cd sample_app
+  124  rails s -p 8080
+  125  cd sample_app
+  126  rails s -p 8080
+  127  rails db:migrate:reset
+  128  cd sample_app
+  129  rails db:migrate:reset
+  130  echo $TERM
+  131  cd sample_app
+  132  rails c
+  133  bundle install
+  134  rails c
+  135  rails s -p 8080
+  136  cd sample_app
+  137  rails s -p 8080
+  138  unzip sample_app_debug.zip
+  139  cd sample_app_debug
+  140  bundle install
+  141  yarn install
+  142  rails db:migrate
+  143  rails db:seed
+  144  config.hosts.clear
+  145  rails s -p 8080
+  146  rails c
+  147  cd sample_app_debug_seminar
+  148  rails c
+  149  unzip sample_app_byebug.zip
+  150  cd sample_app_byebug
+  151  bundle install
+  152  yarn install
+  153  rails db:create
+  154  rails db:migrate
+  155  rails -p 8080
+  156  rails s -p 8080
+  157  unzip sample_app_debug_seminar.zip
+  158   cd sample_app_debug_seminar
+  159  cd sample_app_debug_seminar
+  160  unzip sample_app_debug_seminar.zip
+  161  ../
+  162  cd ../
+  163  unzip sample_app_debug_seminar.zip
+  164  cd sample_app_debug_seminar
+  165  bundle install
+  166  yarn install
+  167  rails db:migrate
+  168  rails db:seed
+  169  rails s -p 8080
+  170  rails s
+  171  rails s -p 8080
+  172  rails c
+  173  lsof -i:8080
+  174  kill 18573
+  175  cat tmp/pids/server.pid
+  176  kill 18573
+  177  rails s -p 8080
+  178  kill 18573
+  179  lsof -i:8080
+  180  kill -9 18573
+  181  lsof -i:8080
+  182  rails s -p 8080
+  183  rails s
+  184  cd bookers
+  185  rails g model List
+  186  bundle install
+  187  rails g model List
+  188  rails db:migrate
+  189  rails new bookers
+  190  cd bookers
+  191  git init
+  192  git status
+  193  git add -A
+  194  git status
+  195  git commit
+  196  git commit -m "Intitial Commit1"
+  197  git diff
+  198  git status
+  199  git log
+  200  git remote -v
+  201  git remote add origin git@github.com:baggucci/bookes.git
+  202  git remote -v
+  203  git branch -M main
+  204  git push origin main
+  205  yarn add @babel/plugin-proposal-private-methods @babel/plugin-proposal-private-property-in-object
+  206  rails s -p 8080
+  207  cd bookers
+  208  rails g controller lists new index show edit
+  209  rails s -p 8080
+  210  cd bookers
+  211  rails g controller homes top
+  212  rails s -p 8080
+  213  rails g controller books new index show edit
+  214  rails s -p 8080
+  215  rails g controller lists new index show edit
+  216  rails g controller book index show edit
+  217  git commit -m "route setting"
+  218  git push -A
+  219  git push origin
+  220  git push origin main
+  221  git add -A
+  222  git commit -m "route setting2"
+  223  git status
+  224  git diff
+  225  git commit -m "route setting3"
+  226  git log
+  227  cd bookers
+  228  rails destroy controller
+  229  rails destroy controller lists
+  230  rails destroy controller books
+  231  rails g controller books new index show e
+  232  rails s -p 8080
+  233  exit
+  234  cd bookers
+  235  rails destroy scaffold list title:string body:text
+  236  rails destroy model list
+  237  rails destroy controller lists
+  238  rails g model Book
+  239  rails db:migrate
+  240  rails routes | grep bookers/books
+  241  git add -A
+  242  git commit -m "validation"
+  243  git push origin main
+  244  rails s -p 8080
+  245  git add -A
+  246  git commit -m "test file"
+  247  git push origin main
+  248  cd bookers
+  249   bundle exec rspec spec/ --format documentation
+  250  git add -A
+  251  git commit -m "submit"
+  252  git push origin main
+  253  git add -A
+  254  git commit -m "[Finish] 課題:Bookersを作成しよう"
+  255  git push origin main
+  256  git log
+  257  cd meshiterro
+  258   rails active_storage:install
+  259  rails db:migrate
+  260  bundle install
+  261   rails g devise:install
+  262   rails g devise User
+  263  rails db:migrate
+  264  rails s -p 8080
+  265  unzip spec_bookers1.zip
+  266  cd bookers
+  267  bundle install
+  268  rails db:migrate RAILS_ENV=test
+  269  bundle exec rspec spec/ --format documentation
+  270  bundle exec rspec spec/ --format documentation > rspec_results.txt
+  271  $ rails routes | grep root
+  272  rails routes | grep root
+  273  rails s -p 8080
+  274  cd ../
+  275  rails new meshiterro
+  276  cd meshiterro
+  277  spring stop
+  278  bundle istall
+  279  bundle install
+  280  rails c
+  281   yarn add @babel/plugin-proposal-private-methods @babel/plugin-proposal-private-property-in-object
+  282  rails s -p 8080
+  283  rails g controler homes
+  284  rails g controller homes
+  285  rails s -p 8080
+  286  rails g devise:views
+  287  cd bookers/
+  288  rails routes
+  289  cd meshiterro
+  290  rails s -p 8080
+  291  rails g model PostImage
+  292  rails db:migrate
+  293  cd meshiterro
+  294  RAILS_ENV=production bin/rails console
+  295  RAILS_ENV=development bin/rails console
+  296  cd meshiterro
+  297  rails g controller PostImages new index show
+  298  rails route
+  299  rails routes
+  300  rails s -p 8080
+  301  cd meshiterro
+  302  rails routes
+  303  cd meshiterro
+  304  rails s
+  305  rails s -p 8080
+  306  rails c
+  307  cd meshiterro
+  308  sudo yum update -y
+  309  sudo amazon-linux-extras install epel -y
+  310  sudo yum install -y ImageMagick
+  311  convert --version
+  312   rails g controller users edit show
+  313  ch meshiterro
+  314  cd meshiterro
+  315  rails routes
+  316  rails s -p 8080
+  317  cd meshiterro
+  318  rails s -p 8080
+  319  rails c
+  320  byebug
+  321  help byebug
+  322  byebug -v
+  323  rails s
+  324  `netstat -aon | find "8080"
+  325  exit
+  326  netstat -aon | find "8080"
+  327  exit
+  328  netstat -aon | find "8080"
+  329  cd meshiterro
+  330  netstat -aon | find "8080"
+  331  rails s -p 8080
+  332  netstat -aon | find '8080'
+  333  lsof -i -P | grep 8080
+  334  kill -9 11427
+  335  rails s -p 8080
+  336  cg meshiterro
+  337  cd meshiterro
+  338  rails routes
+  339  rails g model PostComment comment:text user_id:integer post_image_id:integer
+  340  rails db:migrate
+  341  rails g controller post_comments
+  342  rails routes
+  343  rails s -p 8080
+  344  rails c
+  345   rails g model Favorite user_id:integer post_image_id:integer
+  346  rails db:migrate
+  347  rails g controller favorites
+  348  rails routes
+  349  cd meshiterro
+  350  rails routes
+  351  rails s -p 8080
+  352  rails c
+  353  cd meshiterro
+  354  rails c
+  355  rails s -p 8080
+  356  lsof -i -P | grep 8080
+  357  kill -9 30713
+  358  rails s -p 8080
+  359  cd meshiterro
+  360  rails routes
+  361  rails s -p 8080
+  362  lsof -i -P | grep 8080
+  363  cd meshiterro
+  364  lsof -i -P | grep 8080
+  365  rails s -p 8080
+  366  cd bootstrap_template-main
+  367   bundle install
+  368  yarn install
+  369   rails db:migrate
+  370  export NODE_OPTIONS=--openssl-legacy-provider
+  371  rails s -p 8080
+  372  cd meshiterro
+  373  bundle install
+  374   rails g kaminari:config
+  375   rails g kaminari:views default
+  376  rails s -p 8080
+  377  cd bootstrap_template-main
+  378  cd mehiterro
+  379  cd meshiterro
+  380  rails c
+  381  rails routes
+  382  cd meshiterro
+  383  yarn add jquery bootstrap@4.6.2 popper.js
+  384  rails s -p 8080
+  385  cd bookers2
+  386  git init
+  387  git add -A
+  388  git commit -m "docs: #1-3 active_storage:install"
+  389  git remote add origin git@github.com:baggucci/bookers2.git
+  390  git push origin main
+  391  bundle install
+  392   rails g devise:install
+  393  rails g devise User
+  394  git add -A
+  395  git commit -m "docs: #2-1 create User model using devise"
+  396  git push origin main
+  397  rails db:migrate
+  398  rails g devise:views
+  399  rails g controller homes top
+  400  ・rails g model List でModel作成
+  401  rails g model Book
+  402  rails db:migrate
+  403  rails g controller books index show edit
+  404  sudo yum update -y
+  405  sudo amazon-linux-extras install epel -y
+  406  sudo yum install -y ImageMagick
+  407  convert --version
+  408  rails g controller users show edit
+  409  rails routes
+  410  rails new bookers2
+  411  cd bookers2
+  412  yarn add @babel/plugin-proposal-private-methods @babel/plugin-proposal-private-property-in-object
+  413  rails active_storage:install
+  414  rails db:migrate
+  415  bundle install
+  416  rails db:migrate
+  417  rails s -p 8080
+  418  git add -A
+  419  git commit -m "feat: #2-9 create view files"
+  420  git push origin
+  421  git push origin main
+  422  yarn add jquery bootstrap@4.6.2 popper.js
+  423  rails s -p 8080
+  424  cd bookers2
+  425  rails routes
+  426  cd bookers2
+  427  rails s -p 8080
+  428  cd bookers2
+  429  rails c
+  430  rails s -p 8080
+  431  cd bookers2
+  432  rails s -p 8080
+  433  rails db:migrate
+  434  rails generate migration AddIntroductionToUsers introduction:tex
+  435  rails db:migrate
+  436  rails generate migration AddIntroductionToUsers introduction:text
+  437  rails db:migrate
+  438  generate migration FixIntroductionTypeInUsers
+  439  rails generate migration FixIntroductionTypeInUsers
+  440  rails db:migrate
+  441  git add -A
+  442  git commit -m "feat: #2-10 create current user info view"
+  443  git push origin
+  444  git push origin main
+  445  cd bookers2
+  446  rails routes
+  447  rails db:migrate:status
+  448  rails db:migrate:down VERSION=20250630231834
+  449  rails db:migrate:status
+  450  rails db:migrate
+  451  rails db:migrate:down VERSION=20250629000914
+  452  rails db:migrate:status
+  453  rails db:migrate:up VERSION=20250629000914
+  454  rails db:migrate:status
+  455  rails db:migrate:up VERSION=20250629000914
+  456  rails db:migrate:status
+  457  cd bookers
+  458  cd ../
+  459  cd bookers2
+  460  rails s -p 8080
+  461  cd meshiterro
+  462  rails s -p 
+  463  rails s
+  464  cd bookers
+  465  rails s -p 8080
+  466  cd ../bookers2
+  467  rails s -p 8080
+  468  cd bookers2
+  469  routes
+  470  rails troutes
+  471  rails routes
+  472  git add -A
+  473  git commit -m "feat: #4-22 create user aupdatew"
+  474  git push origin
+  475  git push origin main
+  476  cd bookers2
+  477  rails s -p 8080
+  478  which rufo
+  479  npm install --save-dev prettier prettier-plugin-ruby
+  480  cd bookers2
+  481  rails s -p 8080
+  482  cd bookers2
+  483  git add -A
+  484  git commit -m "feat: #5-6 create flash-message for update"
+  485  git push origin main
+  486  rails c
+  487  cd bookers2
+  488  rails s -p 8080
+  489  cd bookers2
+  490  rails s -p 8080
+  491  cd bookers2
+  492  rails routes
+  493  cd bookers2
+  494  rails s -p 8080
+  495  cd bookers2
+  496  git add -A
+  497  git commit -m "feat: #7-4 create validate for post"
+  498  git push origin main
+  499  bundle install
+  500  rails db:migrate RAILS_ENV=test
+  501   bundle exec rspec spec/ --format documentation
+  502  bundle exec rspec spec/ --format documentation
+  503  cd bookers2
+  504  rails s -p 8080
+  505  cd bookers2
+  506  rails s -p 8080
+  507  cd bookers2
+  508  bundle exec rspec spec/ --format documentation
+  509  bundle exec rspec spec/ --format documentation> rspec_result.txt
+  510  bundle exec rspec spec/ --format documentation
+  511  git add -A
+  512  git commit -m "feat: #8-2 ready rspec test"
+  513  git push origin main
+  514  bundle exec rspec spec/ --format documentation
+  515  git add -A
+  516  git commit -m "finish: #8-2 rspec test"
+  517  git push origin main
+  518  cd meshiterro
+  519  rails s -p 8080
+  520  cd meshiterro
+  521  rails s -p 8080
+  522  cd meshiterro
+  523  rails g devise Admin
+  524  $ rails g devise:controllers admin
+  525  rails g devise:controllers admin
+  526  rails s
+  527  rails g devise:controllers admin
+  528   rails g devise:views admins
+  529  rails db:migrate
+  530  rails c
+  531  rails g controller admin/dashboards
+  532  $ rails g controller admin/users
+  533   rails g controller admin/users
+  534   mkdir app/controllers/public
+  535   mv app/controllers/{favorites,homes,post_comments,post_images,users}_controller.rb app/controllers/public/
+  536  rails g devise:controllers public
+  537  rails new hakamile
+  538  cd hakamile
+  539  git remote add origin リポジトリURL
+  540  git remote add origin git@github.com:baggucci/hakamile.git
+  541  git remote set-url origin git@github.com:baggucci/hakamile.git
+  542  git remote -v
+  543  git push origin main
+  544   git branch -M main
+  545  git push origin main
+  546  git add -A
+  547  git commit -m "setup Readme"
+  548  git push origin main
+  549  cd hakamile
+  550  rails db:migrate
+  551  rails g migration AddNameToUsers name:string
+  552  rails db:migrate
+  553  rails g devise:views
+  554  git add -A
+  555  git commit -m "feat: login"
+  556  git push origin main
+  557  cd hakamile
+  558  yarn add @babel/plugin-proposal-private-methods @babel/plugin-proposal-private-property-in-object
+  559  rails active_storage:install
+  560  rails db:migrate
+  561  bundle install
+  562  rails g devise:install
+  563   rails g devise User
+  564  rails db:migrate
+  565  rails g controller Homes top about
+  566  rails g model Post title:string body:text user:references grave:references status:integer
+  567  rails db:migrate
+  568  rails g model Grave name:string description:text genre:references location:string
+  569  rails db:migrate
+  570  rails g model Genre name:string
+  571  rails db:migrate
+  572  rails g controller Posts index show new edit
+  573  rails s -p 8080
+  574  cd halamile
+  575  cd hakamile
+  576  rails g model Grave name:string address:string latitude:float longitude:float description:text prefecture:string
+  577  rails db:migrate
+  578  rails g model grave name:string address:string latitude:float longitude:float description:text prefecture:string
+  579  rails db:migrate
+  580  git add -A
+  581  git commit -m "feat: create view"
+  582  git push origin main
+  583  cd hakamile
+  584  rails s -p 8080
+  585  cd hakamile
+  586  $ rails g controller admin/dashboards
+  587  rails g controller admin/dashboards
+  588  rails g controller admin/users
+  589  rails g controller admin/graves
+  590  cd hakamile
+  591  rails g devise Admin
+  592  rails db:migrate
+  593  rails s -p 8080
+  594  cd hakamile
+  595  rails s -p 8080
+  596  $ rails g devise:views admins
+  597  rails g devise:views admins
+  598  rails g devise:views admin
+  599  rails g devise:controllers admin
+  600  rails g devise:views admins
+  601  rails db:migrate
+  602  rails c
+  603  cd hakamile
+  604  rails routes
+  605  grep -r 'Grafe' app/
+  606  find app/ -iname '*grafe*'
+  607  grep -r 'Grafe' app/
+  608  bin/spring stop
+  609  rails tmp:clear
+  610  rails routes | grep grave
+  611  cd hakamile
+  612  rails s -p 8080
+  613  cd hakamile
+  614  rails routes | grep grave
+  615  rails routes
+  616  rails g model grave_genre grave:references genre:references
+  617  rails db:migrate
+  618  rails c
+  619  cd hakamile
+  620  rails s -p 8080
+  621  cd hakamile
+  622  rails g migration AddProfileToUsers profile:text
+  623  rails db:migrate
+  624  git add -A
+  625  git commit -m "feat: create mypage"
+  626  git push origin main
+  627  cd hakamile
+  628  rails s -p 8080
+  629  cd hakamile
+  630  rails s -p 8080
+  631  cd hakamile
+  632  rails s -p 8080
+  633  cd hakamile
+  634  rails generate controller Graves index show
+  635  rails c
+  636  rails s -p 8080
+  637  cd hakamile
+  638  rails s -p 8080
+  639  cd meshiterro
+  640  rails s -p 8080
+  641  cd ../
+  642  cd bookers2
+  643  rails s -p 8080
+  644  cd ../
+  645  cd hakamile
+  646  rails s -p 8080
+  647  mv practice-aws.pem ~/.ssh/
+  648  sudo chmod 600 ~/.ssh/practice-aws.pem
+  649  ssh -i ~/.ssh/practice-aws.pem ec2-user@ip-172-31-2-218.ap-northeast-1.compute.internal
+  650  ssh -i ~/.ssh/practice-aws.pem ec2-user@54.65.60.165
+  651  exit
+  652  cd hakamile
+  653  bundle install --without production
+  654  git add Gemfile Gemfile.lock config/puma.rb config/database.yml .gitignore
+  655  git commit -m 'deploy setting'
+  656  git add Gemfile Gemfile.lock config/puma.rb config/database.yml .gitignore
+  657  git commit -m 'deploy setting'
+  658  git add 
+  659  git commit -m 'deploy setting'
+  660  git push origin main
+  661  ssh -i ~/.ssh/practice-aws.pem ec2-user@54.65.60.165
+  662  cd
+  663  cd environment
+  664  scp -i ~/.ssh/practice-aws.pem ~/.ssh/id_rsa ec2-user@54.65.60.165:.ssh/id_rsa
+  665  cd hakamile
+  666  scp -i ~/.ssh/practice-aws.pem config/master.key ec2-user@54.65.60.165:hakamile/config
+  667  scp -i ~/.ssh/practice-aws.pem .env ec2-user@54.65.60.165:hakamile/
+  668  git add -A
+  669  git commit -m "実装フェーズ1完了"
+  670  git push origin main
+  671  cd hakamile
+  672  rails s -p 8080
+  673  cd hakamile
+  674  sqlite3 db/development.sqlite3
+  675  ssh -i ~/.ssh/practice-aws.pem ec2-user@54.65.60.165
+  676  cd hakamile
+  677  git add -A
+  678  git commit -m "docs:update graves migration"
+  679  git push origin main
+  680  git add -A
+  681  git commit -m "docs:update graves_genre migration"
+  682  git push origin main
+  683  cd hakamile
+  684  cd hakamile
+  685  rails s -p 8080
+  686  bundle exec rails db:migrate RAILS_ENV=production
+  687  bin/rails db:migrate RAILS_ENV=development
+  688  bin/rails db:migrate:status
+  689  bin/rails db:migrate:up VERSION=20250729224300
+  690  rails db:migrate:up VERSION=20250729224300
+  691  rails db:reset
+  692  bin/rails db:migrate:status
+  693  rails s -p 8080
+  694  cd hakamile
+  695  rails s -p 8080
+  696  cd hakamile
+  697  bundle install
+  698  rails db:seed
+  699  rails c
+  700  rails db:seed
+  701  rails c
+  702  rails db:seed
+  703  cd hakamile
+  704  rails s -p 8080
+  705  git add -A
+  706  git commit -m "Feat:mapping"
+  707  git push origin main
+  708  ssh -i ~/.ssh/practice-aws.pem ec2-user@54.65.60.165
+  709  cd hakamile
+  710  git add Gemfile, git commit -m "Fix duplicate gem", git push
+  711  git add Gemfile
+  712  git commit -m "Fix duplicate gem"
+  713  git push
+  714  git add Gemfile
+  715  git commit -m "Fix duplicate gem"
+  716  git push
+  717  git push origin main
+  718  ssh -i ~/.ssh/practice-aws.pem ec2-user@54.65.60.165
+  719  rails c
+  720  rails g migration ChangeGenreIdTypeInGraveGenres
+  721  git add -A
+  722  git commit -m "Fix FK types to bigint"
+  723  cd hakamile
+  724  git add .
+  725  git commit -m "grave_genresのgenre_idカラムの型を修正"
+  726  git push origin main
+  727  rails db:migration
+  728  rails db:migrate
+  729  git add .
+  730  git commit -m "grave_genresのgenre_idカラムの型を修正"
+  731  git push origin main
+  732  git add .
+  733  git commit -m "Fix FK to bigint"
+  734  cd hakamile
+  735  rails db:migrate
+  736  git add .
+  737  git commit -m "Fix FK to bigint"
+  738  git push origin main
+  739  cd hakamile
+  740   rails db:seed RAILS_ENV=production
+  741  ssh -i ~/.ssh/practice-aws.pem ec2-user@54.65.60.165
+  742  git add -A
+  743  git commit -m "FIX: FK types to bigint"
+  744  git push origin main
+  745  ssh -i ~/.ssh/practice-aws.pem ec2-user@54.65.60.165
+  746  rails db:migrate
+  747  git add .
+  748  git commit -m "grave_genresのgenre_idカラムの型を修正"
+  749  git push
+  750  git push origin main
+  751  ssh -i ~/.ssh/practice-aws.pem ec2-user@54.65.60.165
+  752  cd hakamile
+  753  rails s -p 8080
+  754  rails db:migrate
+  755  rails db:migrate:reset
+  756  git status
+  757  rails db:migrate:reset
+  758  rails db:environment:set RAILS_ENV=development
+  759  rails db:migrate:reset
+  760  git add .
+  761  git commit -m "remove migration"
+  762  git push origin main
+  763  ssh -i ~/.ssh/practice-aws.pem ec2-user@54.65.60.165
+  764  exit
+  765  cd hakamile
+  766  rails db:seed
+  767  vi .env
+  768  cd hakamile
+  769  rails s -p 8080
+  770  cd hakamile
+  771  rails s -p 8080
+  772  cd hakamile
+  773  tree > project-tree.txt
+  774  rails s -p 8080
+  775  bundle install 
+  776  rails s -p 8080
+  777  cd hakamile
+  778  rails s -p 8080
+  779  git add .
+  780  git commit -m "feat top design"
+  781  git push origin main
+  782  rails s -p 8080
+  783  git add .
+  784  git commit -m "update mypage and posts design"
+  785  git push origin main
+  786  ssh -i ~/.ssh/practice-aws.pem ec2-user@54.65.60.165
+  787  cd hakamile
+  788  rails s -p 8080
+  789  git fetch origin
+  790  rails s -p 8080
+  791  cd hakamile 
+  792  rails s -p 8080
+  793  rails generate model Comment user:references post:references body:text
+  794  rails db:migrate
+  795  rails s -p 8080
+  796  rails generate model Like user:references post:references
+  797  rails db:migrate
+  798  rails s -p 8080
+  799  rails s -p
+  800  rails s -p　3000
+  801  CD hakamile
+  802  cd hakamile
+  803  rails s -p 8080
+  804  cd hakamile 
+  805  rails s -p 8080
+  806  cd hakamile
+  807  rails c
+  808  rails g controller admin/posts index show destroy
+  809  rails g controller admin/comments index destroy
+  810  rails g controller admin/genres index create edit update destroy
+  811  rails g controller admin/reports index show update
+  812  exit
+  813  cd hakamile
+  814  rails s -p 8080
+  815  git add .
+  816  git commit -m "feat admin"
+  817  git push origin main
+  818  rails s -p 8080
+  819  ssh -i ~/.ssh/practice-aws.pem ec2-user@54.65.60.165
+  820  cd hakamile
+  821  rails s -p 8080
+  822  ssh -i ~/.ssh/practice-aws.pem ec2-user@54.65.60.165
+  823  cd hakamile
+  824  rails s -p 8080
+  825  git add .
+  826  git commit -m "feat admin routing stylesheet_pack_tag"
+  827  git add .
+  828  git commit -m "feat admin routing stylesheet_pack_tag"
+  829  git push origin main
+  830  ssh -i ~/.ssh/practice-aws.pem ec2-user@54.65.60.165
+  831  cd hakamile 
+  832  git add .
+  833  git commit -m "feat admin routing stylesheet_pack_tag"
+  834  git push origin main
+  835  ssh -i ~/.ssh/practice-aws.pem ec2-user@54.65.60.165
+  836  git add .
+  837  git commit -m "feat admin routing stylesheet_pack_tag"
+  838  git push origin main
+  839  ssh -i ~/.ssh/practice-aws.pem ec2-user@54.65.60.165
+  840  cd hakamile 
+  841  rails s -p 8080
+  842  cd hakamile
+  843   git branch feature/add-lorem-ipsum
+  844  git checkout feature/add-lorem-ipsum
+  845  git branch
+  846  ../
+  847  git commit --allow-empty -m "first commit" 
+  848  git push origin develop
+  849  git checkout feature/add-lorem-ipsum
+  850  git status
+  851  git add -A
+  852  git commit -m "Add lipsum for tests"
+  853  git push origin feature/add-lorem-ipsum
+  854  git checkout
+  855  git checkout main
+  856  git checkout origin
+  857  git checkout develop
+  858  git pull origin main
+  859  rails s -p 8080
+  860  ex5t
+  861  cd hakamile
+  862  rails g controller Reports new create
+  863  rails s -p 8080
+  864  rails g migration AddNoteToReports note:text
+  865  rails db:migrate
+  866  rails s -p 8080
+  867  rails g model Report reporter:references reported:references reportable:references{polymorphic} reason:integer status:integer
+  868  rails db:migrate
+  869  rails s -p 8080
+  870  cd hakamile
+  871  rails g model Inquiry name:string email:string category:integer status:integer message:text linkable:references{polymorphic}
+  872  rails db:migrate
+  873  rails g controller Inquiries new create complete
+  874  rails g controller admin/inquiries index show update
+  875  rails -v
+  876  inquiry = Inquiry.find(3) # エラーに出ていたIDを使う
+  877  rails c
+  878  cd hakamile
+  879  rails s -p 8080
+  880  cd hakamile
+  881  gem "enum_help"
+  882  bundle install
+  883  rails c
+  884  rails s -p 8080
+  885  cd hakamile
+  886  rails s -p 8080
+  887  git add -A
+  888  git commit -m "Add inquiry"
+  889  git push origin main
+  890  rails s -p 8080
+  891  cd hakamile
+  892  rails s -p 8080
+  893  cd hakamile
+  894  rails s -p 8080
+  895  rails g migration AddLatitudeAndLongitudeToGraves latitude:float longitude:float
+  896  rails db:rollback
+  897  rails destroy migration AddLatitudeAndLongitudeToGraves
+  898  rails s -p 8080
+  899  bin/rails db:migrate
+  900  rails s -p 8080
+  901  in/rails stimulus:manifest:update
+  902  rails s -p 8080
+  903  kill $(cat tmp/pids/server.pid)
+  904  rails s -p 8080
+  905  PID
+  906  kill
+  907  ps aux | grep ruby
+  908  rm tmp/pids/server.pid
+  909  rails s -p 8080
+  910  cd hakamile
+  911  bin/rails stimulus:manifest:update
+  912  exiting
+  913  rails s -p 8080
+  914  lsof -i :8080
+  915  lsof -i :3000
+  916  rails s -p 3000
+  917  cd hakamile
+  918  rails s -p 8080
+  919  cd hakamile
+  920  rails s -p 8080
+  921  cd hakamile
+  922  rails s -p 8080
+  923  rails s -p 3000
+  924  cd hakamile
+  925  rails s -p 8080
+  926  CD
+  927  cd ..
+  928  cd hakamile
+  929  rails s -p 8080
+  930  cd hakamile
+  931  rails g controller Likes create destroy
+  932  rails s -p 3000
+  933  cd hakamile
+  934  rails s -p 8080
+  935  bundle install
+  936  rails s -p 8080
+  937  cd hakamile
+  938  git add -A
+  939  git commit -m "Add post page"
+  940   git push origin main
+  941  rails s -p 8080
+  942  bundle install
+  943  rails s -p 8080
+  944  git add -A
+  945  git commit -m "Add guest login"
+  946   git push origin main
+  947  rails s -p 8080
+  948  rails s -p 3000
+  949  cd hakamile
+  950  rails g controller searches show
+  951  cd hakamile
+  952  rails s -p 3000
+  953  bundle install
+  954  rails s -p 8080
+  955  cd hakamile
+  956  rails s -p 8080
+  957  cd hakamile
+  958  bin/rails routes | grep search
+  959  rails c
+  960  rails -v
+  961  bin/rails routes | grep post_like
+  962  rails routes | grep liked
+  963  cd hakamile
+  964  rails s -p 8080
+  965  bundle install
+  966  rails s -p 8080
+  967  rails s -p 3000
+  968  rails s -p 8080
+  969  bundle install
+  970  rails s -p 8080
+  971  rails g migration AddLikesCountToPosts likes_count:integer
+  972  rails db:migrate
+  973  rails s -p 8080
+  974  bundle install
+  975  rails s -p 8080
+  976  bundle install
+  977  rails s -p 8080
+  978  cd hakamile
+  979  rails s -p 8080
+  980  git add -A
+  981  git commit -m "Add Like search function"
+  982   git push origin main
+  983  rails g model Relationship follower_id:integer followed_id:integer
+  984  rails db:migrate
+  985  rails g controller Relationships
+  986  rails s -p 8080
+  987  rails db:seed
+  988  rails s -p 8080
+  989  rails db:seed
+  990  rails s -p 8080
+  991  rails db:seed
+  992  rails s -p 8080
+  993  cd hakamile
+  994  rails s -p 8080
+  995  cd hakamile
+  996  rails s -p 8080
+  997  cd hakamile
+  998  rails s -p 8080
+  999  cd hakamile
+ 1000  rails s -p 8080
+ 1001  git add -A
+ 1002  git commit -m "Revise search function"
+ 1003   git push origin main
+ 1004  history > command_history.txt
