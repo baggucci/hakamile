@@ -1,3 +1,4 @@
+/* TOPに付属するPost_Cardレイアウト --- */
 /* review-body (テキスト省略) */
 .review-body .text-content {
   overflow: hidden; /* JavaScriptで制御するため */
@@ -41,4 +42,79 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+}
+
+
+
+/* --- 投稿レイアウト --- */
+
+/* 本文と写真の親コンテナ */
+.post-layout-container {
+  display: flex;
+  gap: 16px; /* 本文と写真の間の余白 */
+}
+
+/* 左側：本文エリア */
+.post-text-content {
+  flex: 1; /* 残りのスペースをすべて使う */
+  min-width: 0; /* flexアイテムの縮小を許可 */
+}
+
+/* 右側：写真ギャラリーエリア */
+.post-image-gallery {
+  width: 240px;  /* 写真エリアの横幅を固定 */
+  flex-shrink: 0; /* コンテナが縮んでもこのエリアの幅は維持 */
+}
+
+/* Graveに付属するPost一覧レイアウト --- */
+/* 画像がコンテナにきれいに収まるように */
+.post-image-gallery img {
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+/* 1枚のときのレイアウト */
+.image-layout-1 img {
+  width: 240px;
+  height: 160px;
+}
+
+/* 2枚のときのレイアウト */
+.image-layout-2 {
+  display: flex;
+  gap: 4px;
+}
+.image-layout-2 img {
+  width: 118px; /* gapを考慮して少し小さく */
+  height: 160px;
+}
+
+/* 3枚のときのレイアウト */
+.image-layout-3 {
+  display: flex;
+  gap: 4px;
+}
+.image-layout-3 .large-image img {
+  width: 158px;
+  height: 158px;
+}
+.image-layout-3 .small-images {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.image-layout-3 .small-images img {
+  width: 78px;
+  height: 77px;
+}
+
+/* いいねボタンとコメント数の文字サイズを小さくする */
+.font-size-sm .btn-link,
+.font-size-sm .far {
+  font-size: 0.875rem; /* または任意の小さなサイズ */
+}
+
+/* いいねの数字を少し大きく表示したい場合 (任意) */
+.font-size-sm .btn-link span { /* もしいいね数がspanタグで囲まれている場合 */
+  font-size: 1rem;
 }

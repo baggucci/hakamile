@@ -43,13 +43,20 @@ class PostsController < ApplicationController
 
    # PATCH /posts/:id
    def update
-    # @postはbefore_actionで設定済み
+    @post = Post.find(params[:id])
+
+    # 削除ロジックがこの通りになっているか確認
+    if params[:delete_image_ids]
+      params[:delete_image_ids].each do |image_id|
+        image = @post.images.find_by(id: image_id)
+        image.purge if image
+      end
+    end
+
     if @post.update(post_params)
-      redirect_to post_path(@post), notice: "投稿を更新しました。"
+      redirect_to @post, notice: '投稿が更新されました。'
     else
-      # 更新失敗時にエラーメッセージを表示して編集フォームを再表示
-      flash.now[:alert] = "更新に失敗しました。必須項目を確認してください。"
-      render :edit
+      render :edit, status: :unprocessable_entity
     end
   end
 

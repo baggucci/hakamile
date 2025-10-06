@@ -1,4 +1,28 @@
 <div class="container">
+  <nav aria-label="breadcrumb" class="mb-4">
+    <ol class="breadcrumb">
+      <%# 1. トップページへのリンク %>
+      <li class="breadcrumb-item">
+        <%= link_to "トップ", root_path %>
+      </li>
+
+      <%# 2. 偉人一覧ページへのリンク %>
+      <li class="breadcrumb-item">
+        <%= link_to "偉人一覧", graves_path %>
+      </li>
+
+      <%# 3. この投稿が属する墓所（偉人）ページへのリンク %>
+      <li class="breadcrumb-item">
+        <%= link_to @post.grave.name, grave_path(@post.grave) %>
+      </li>
+
+      <%# 4. 現在のページ（投稿者の名前 + "さんの投稿"） %>
+      <li class="breadcrumb-item active" aria-current="page">
+        <%= @post.user&.name || '退会したユーザー' %>さんの投稿
+      </li>
+    </ol>
+  </nav>
+
   <h3 class="my-4"><%= @post.title %></h3>
 
   <div class="card">

@@ -1,9 +1,7 @@
-<%# app/views/posts/_post.html.erb %>
-
-<div class="review-card card mb-4" id="post-<%= post.id %>">
+<div class="card mb-4" id="post-<%= post.id %>">
   <div class="card-body">
     <%# --- 投稿者情報 --- %>
-    <div class="review-header d-flex align-items-center mb-3">
+    <div class="d-flex align-items-center mb-3">
       <%= image_tag 'default_avatar.png', class: 'reviewer-avatar' %>
       <div class="reviewer-info">
         <span class="reviewer-name"><%= post.user&.name || '退会したユーザー' %></span>
@@ -12,37 +10,72 @@
         <small class="text-muted"><%= l post.created_at, format: :short %></small>
       </div>
     </div>
+    
+    <%# --- タイトル、いいねボタン、コメント数のコンテナ --- %>
+    <div class="d-flex justify-content-between align-items-center mb-2"> <%# mb-2 で下に少し余白を追加 %>
 
+      <%# --- 左側：タイトル --- %>
+      <h5 class="fw-bold mb-0">
+        <%= link_to post.title, post, class: 'text-dark text-decoration-none' %>
+      </h5>
 
-    <%# --- 投稿本文 (150文字で省略し、詳細は個別ページへ) --- %>
-    <div class="review-body mb-3">
-      <div class="text-content">
-        <%# 150文字で省略し、改行も反映させる %>
-        <p><%= simple_format(h(truncate(post.body, length: 150))) %></p>
+      <%# --- 右側：いいねボタンとコメント数 --- %>
+      <div class="d-flex align-items-center gap-3"> <%# Flexboxで横並び、gap-3で間隔を空ける %>
+        <%# いいねボタンのコンテナ (少し小さくするために `font-size-sm` クラスを追加) %>
+        <div id="like-button-<%= post.id %>" class="font-size-sm">
+          <%= render 'likes/like_button', post: post %>
+        </div>
+
+        <%# コメント数表示 %>
+        <div class="comment-count-display font-size-sm">
+          <%= link_to post_path(post, anchor: 'comments-section'), class: 'text-muted text-decoration-none' do %>
+            <i class="far fa-comment-dots"></i> <%= post.comments.count %>
+          <% end %>
+        </div>
       </div>
-      <% if post.body.length > 150 %>
-        <%# 投稿詳細ページへのリンクとして「もっと見る」を設置 %>
-        <%= link_to 'もっと見る', post_path(post), class: 'btn btn-link btn-sm p-0 mt-1' %>
-      <% end %>
+
     </div>
 
-    <%# --- 投稿画像 (Retty風: 大サイズ1枚、中サイズ2枚) --- %>
-    <% if post.images.attached? %>
-      <div class="review-images-container d-flex flex-wrap gap-2 mb-3">
-        <% post.images.first(3).each_with_index do |image, index| %>
-          <% if index == 0 %>
-            <%= image_tag image, class: 'review-image review-image-large' %>
-          <% else %>
-            <%= image_tag image, class: 'review-image review-image-medium' %>
-          <% end %>
-        <% end %>
-        <% if post.images.count > 3 %>
-          <div class="review-image-medium more-images-overlay d-flex align-items-center justify-content-center">
-            <span class="text-white fs-5">+<%= post.images.count - 3 %></span>
-          </div>
+    <%# --- 本文と写真のレイアウトコンテナ --- %>
+    <div class="post-layout-container">
+      <%# --- 左側：投稿本文 --- %>
+      <div class="post-text-content">
+        <p><%= simple_format(h(truncate(post.body, length: 150))) %></p>
+        <% if post.body.length > 150 %>
+          <%= link_to 'もっと見る', post_path(post), class: 'btn btn-link btn-sm p-0' %>
         <% end %>
       </div>
-    <% end %>
 
+      <%# --- 右側：投稿写真 --- %>
+      <% if post.images.attached? %>
+        <div class="post-image-gallery">
+          <%# 画像の枚数に応じて分岐 %>
+          <% case post.images.size %>
+          <%# --- 1枚のとき --- %>
+          <% when 1 %>
+            <div class="image-layout-1">
+              <%= image_tag post.images.first.variant(resize_to_fill: [240, 160]), class: 'img-fluid' %>
+            </div>
+          <%# --- 2枚のとき --- %>
+          <% when 2 %>
+            <div class="image-layout-2">
+              <%= image_tag post.images.first.variant(resize_to_fill: [120, 160]), class: 'img-fluid' %>
+              <%= image_tag post.images.second.variant(resize_to_fill: [120, 160]), class: 'img-fluid' %>
+            </div>
+          <%# --- 3枚以上のとき --- %>
+          <% else %>
+            <div class="image-layout-3">
+              <div class="large-image">
+                <%= image_tag post.images.first.variant(resize_to_fill: [160, 160]), class: 'img-fluid' %>
+              </div>
+              <div class="small-images">
+                <%= image_tag post.images.second.variant(resize_to_fill: [80, 80]), class: 'img-fluid' %>
+                <%= image_tag post.images.third.variant(resize_to_fill: [80, 80]), class: 'img-fluid' %>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
   </div>
 </div>
