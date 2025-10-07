@@ -58,18 +58,21 @@ class GravesController < ApplicationController
     latitude = params[:latitude]
     longitude = params[:longitude]
 
-    if latitude.present? && longitude.present?
-      # Geokitのwithinメソッドで近くの墓所を検索
-      @graves = Grave.within(100, origin: [latitude, longitude])
-    else
-      # 位置情報がない場合は結果を空にする
-      @graves = [] 
-      flash.now[:alert] = "位置情報が取得できませんでした。"
+    if latitude.blank? || longitude.blank?
+      flash.now[:alert] = "位置情報を取得できませんでした。もう一度お試しください。"
+      @graves = []
+      render :nearby and return
     end
-    
-    # app/views/graves/nearby.html.erb を表示
+
+    @graves = Grave.within_100km(latitude, longitude)
+
+    if @graves.empty?
+      flash.now[:alert] = "近くにお墓は見つかりませんでした。"
+    end
+
     render :nearby
   end
+
 
   private
 

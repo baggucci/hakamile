@@ -1,5 +1,6 @@
 class Grave < ApplicationRecord
 
+
     # Ransackが検索できるカラムのリストを定義します
     def self.ransackable_attributes(auth_object = nil)
         # ここに、ユーザーに検索を許可したいカラム名を文字列の配列として記述します
@@ -7,7 +8,6 @@ class Grave < ApplicationRecord
         ["name", "prefecture", "description", "address"]
     end
 
-    # (任意) Ransackが検索できる関連モデルのリストを定義します
     def self.ransackable_associations(auth_object = nil)
         # 例えばUserモデルやCommentモデルを関連検索したい場合に記述します
         [] # 今は空でOK
@@ -23,6 +23,8 @@ class Grave < ApplicationRecord
     has_many :comments, through: :posts 
 
     # :latitude, :longitude カラムを位置情報として認識させる
+    geocoded_by :address
+    after_validation :geocode, if: :will_save_change_to_address?
     reverse_geocoded_by :latitude, :longitude
     
     # main_imageという名前で画像を1つ添付できるようにする
@@ -31,4 +33,12 @@ class Grave < ApplicationRecord
     acts_as_mappable default_units: :kms,
     lat_column_name: :latitude,
     lng_column_name: :longitude
+
+
+  # 指定された緯度経度から100km以内の墓所を検索するクラスメソッド
+  def self.within_100km(latitude, longitude)
+    # Geocoderのnearメソッドを使って検索結果を返す
+    near([latitude, longitude], 400, units: :km)
+  end
+
 end

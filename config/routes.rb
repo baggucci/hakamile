@@ -74,7 +74,6 @@ Rails.application.routes.draw do
   # --- 検索ページ ---
   resource :search, only: [:new, :show], controller: 'searches'
   resource :user_search, only: [:show], controller: 'user_searches'
-
   
  # usersリソースに、フォロー/フォロワー一覧ページへのルーティングを追加
  resources :users do # only: [:index, :show] など必要に応じて設定

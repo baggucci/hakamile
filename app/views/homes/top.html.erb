@@ -94,10 +94,15 @@
                             近くの墓所を検索
                         </p>
                         
-                        <button class="btn btn-gold location-btn" data-action="click->location-search#search">
-                            <i class="fas fa-crosshairs me-2"></i>位置情報を取得
-                        </button>
-                    </div>
+                        <%= link_to search_path, class: "btn btn-gold location-btn" do %>
+                            <i class="fas fa-crosshairs me-2"></i>近くの墓所を検索
+                          <% end %>
+                        
+                        <a href="#" id="search-by-location-btn" class="btn btn-gold location-btn">
+                          <i class="fas fa-crosshairs me-2"></i>近くの墓所を検索
+                        </a>
+
+                          </div>
                 </div>
             </div>
         </div>
@@ -137,3 +142,4 @@
     </div>
 </section>
 
+<%= javascript_pack_tag 'location' %>
