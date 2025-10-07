@@ -27,7 +27,7 @@
 
   <div class="card">
     <div class="card-body">
-      <p><strong>投稿者:</strong> <%= @post.user.name %></p>
+      <p><strong>投稿者:</strong> <%= link_to @post.user.name, @post.user %></p>
       <p><strong>墓所:</strong> <%= @post.grave.name %></p>
       <p><strong>投稿日時:</strong> <%= l @post.created_at, format: :long %></p>
       <hr>
@@ -47,7 +47,9 @@
 
       <%# --- ここからいいねボタンを追加 --- %>
       <div class="like-section my-3" id="like-button-<%= @post.id %>">
-        <%= render 'likes/like_button', post: @post %>
+        <% if @post.user != current_user %>
+          <%= render 'likes/like_button', post: @post %>
+        <% end %>
       </div>
       <%# --- ここまで --- %>
 

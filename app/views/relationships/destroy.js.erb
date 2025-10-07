@@ -1,5 +1,17 @@
 // IDを使って、更新したいボタンのエリアを特定します
-const follow_area = document.getElementById('follow_form_<%= @user.id %>');
+follow_area = document.getElementById('follow_form_<%= @user.id %>');
+
+//統計情報を囲んでいるdiv要素を取得
+statsElement = document.getElementById("stats_<%= @user.id %>");
 
 // データベースでは未フォロー状態に戻っているため、再描画すると自動的に「フォローする」ボタンになります
 follow_area.innerHTML = '<%= j(render "users/follow_unfollow_button", user: @user) %>';
+
+if (statsElement) {
+  statsElement.innerHTML = "<%= j(render('users/stats', user: @user)) %>";
+}
+
+// 統計情報の中身を、最新の状態で書き換える（追加）
+if (statsElement) {
+  statsElement.innerHTML = "<%= j(render('users/stats', user: @user)) %>";
+}

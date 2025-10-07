@@ -21,7 +21,6 @@
 
       <%# --- 右側：いいねボタンとコメント数 --- %>
       <div class="d-flex align-items-center gap-3"> <%# Flexboxで横並び、gap-3で間隔を空ける %>
-        <%# いいねボタンのコンテナ (少し小さくするために `font-size-sm` クラスを追加) %>
         <div id="like-button-<%= post.id %>" class="font-size-sm">
           <%= render 'likes/like_button', post: post %>
         </div>

@@ -1,3 +1,15 @@
-document.getElementById('stats_<%= @user.id %>').innerHTML = '<%= j(render "users/stats", user: @user) %>';
+//IDを使って更新するdiv要素を取得
+ userElement = document.getElementById("follow_form_<%= @user.id %>");
 
-document.getElementById('follow_form_<%= @user.id %>').innerHTML = '<%= j(render "users/follow_unfollow_button", user: @user) %>';
+//統計情報を囲んでいるdiv要素を取得
+ statsElement = document.getElementById("stats_<%= @user.id %>");
+
+// div要素の中身を「フォロー解除」ボタンのHTMLに書き換える
+if (userElement) {
+  userElement.innerHTML = "<%= j(render('users/follow_unfollow_button', user: @user)) %>";
+}
+
+// 統計情報の中身を、最新の状態で書き換える（追加）
+if (statsElement) {
+  statsElement.innerHTML = "<%= j(render('users/stats', user: @user)) %>";
+}

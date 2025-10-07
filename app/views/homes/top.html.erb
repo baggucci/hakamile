@@ -19,7 +19,7 @@
                   <div class="col-lg-10">
                     <%= search_form_for @q, url: search_path, method: :get, html: { class: "input-group input-group-lg" } do |f| %>
                       <%= f.search_field :name_cont,
-                                         placeholder: "故人名を入力してください（例：夏目漱石、手塚治虫）",
+                                         placeholder: "故人名を入力してください（例：坂本龍馬、織田信長）",
                                          class: "form-control search-input" %>
                       <%= f.submit "検索", class: "btn search-btn px-4" %>
                     <% end %>
