@@ -1,10 +1,7 @@
 class Grave < ApplicationRecord
-
-
     # Ransackが検索できるカラムのリストを定義します
     def self.ransackable_attributes(auth_object = nil)
         # ここに、ユーザーに検索を許可したいカラム名を文字列の配列として記述します
-        # 今回エラーが出ている :name_or_prefecture に合わせて "name" と "prefecture" を含めます
         ["name", "prefecture", "description", "address"]
     end
 
@@ -34,11 +31,5 @@ class Grave < ApplicationRecord
     lat_column_name: :latitude,
     lng_column_name: :longitude
 
-
-  # 指定された緯度経度から100km以内の墓所を検索するクラスメソッド
-  def self.within_100km(latitude, longitude)
-    # Geocoderのnearメソッドを使って検索結果を返す
-    near([latitude, longitude], 400, units: :km)
-  end
 
 end

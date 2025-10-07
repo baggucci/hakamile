@@ -47,9 +47,7 @@
 
       <%# --- ここからいいねボタンを追加 --- %>
       <div class="like-section my-3" id="like-button-<%= @post.id %>">
-        <% if @post.user != current_user %>
           <%= render 'likes/like_button', post: @post %>
-        <% end %>
       </div>
       <%# --- ここまで --- %>
 
