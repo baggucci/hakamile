@@ -29,10 +29,7 @@ class SearchesController < ApplicationController
       nearby_graves = Grave.where(latitude: (lat - 1)..(lat + 1), longitude: (lng - 1)..(lng + 1))
       @graves = nearby_graves.sort_by do |grave|
         Geocoder::Calculations.distance_between([lat, lng], [grave.latitude, grave.longitude])
-      end
-    
-    else
-      @graves = Grave.none
+      end    
     end
   end
 end
