@@ -21,9 +21,6 @@
         <dt class="col-sm-3">メールアドレス</dt>
         <dd class="col-sm-9"><%= @inquiry.email %></dd>
 
-        <dt class="col-sm-3">件名</dt>
-        <dd class="col-sm-9"><%= @inquiry.subject %></dd>
-
         <dt class="col-sm-3">内容</dt>
         <dd class="col-sm-9">
           <%# simple_formatは、改行文字(\n)を<br>タグに変換して表示します %>
@@ -33,8 +30,13 @@
     </div>
   </div>
 
-  <%# 必要であれば削除ボタンなども設置します %>
-  <div class="text-end mt-4">
-    <%= link_to 'この問い合わせを削除する', admin_inquiry_path(@inquiry), data: { turbo_method: :delete, turbo_confirm: '本当に削除しますか？' }, class: 'btn btn-danger' %>
-  </div>
+  <dd class="col-sm-9">
+    <%= form_with model: [:admin, @inquiry], local: true do |f| %>
+      <div class="input-group">
+        <%= f.select :status, Inquiry.statuses.keys.map { |s| [s.titleize, s] }, {}, class: "form-select" %>
+        <button class="btn btn-primary" type="submit">更新</button>
+      </div>
+    <% end %>
+  </dd>
+
 </div>

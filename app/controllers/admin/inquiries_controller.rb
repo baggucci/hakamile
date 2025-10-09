@@ -1,5 +1,4 @@
 # app/controllers/admin/inquiries_controller.rb
-
 class Admin::InquiriesController < Admin::BaseController
   def index
     # includesでN+1問題を解消
