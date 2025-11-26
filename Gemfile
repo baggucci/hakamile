@@ -77,3 +77,6 @@ gem 'kaminari' # ページネーション用
 gem "enum_help"
 gem 'ransack'
 gem 'turbo-rails'
+
+
+gem 'devise-i18n'
