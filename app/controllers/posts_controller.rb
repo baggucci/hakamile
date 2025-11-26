@@ -34,10 +34,13 @@ class PostsController < ApplicationController
     if @post.save
       redirect_to grave_path(@post.grave), notice: '墓参日記を投稿しました。'
     else
-      # 失敗した場合、newアクションで使った@graveを再設定してnewページを再表示
-      @grave = Grave.find(post_params[:grave_id])
+      if post_params[:grave_id].present?
+        @grave = Grave.find_by(id: post_params[:grave_id])  # findではなくfind_by
+      end
+      @graves = Grave.all  # newで使っているなら忘れずに
+  
       flash.now[:alert] = '投稿に失敗しました。'
-      render :new
+      render :new, status: :unprocessable_entity
     end
   end
 
