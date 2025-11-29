@@ -57,7 +57,7 @@
     <% if @post.user == current_user %>
       <div class="card-footer">
         <%= link_to "編集する", edit_post_path(@post), class: "btn btn-success" %>
-        <%= link_to "削除する", post_path(@post), method: :delete, data: { "turbo-method": :delete, "turbo-confirm": "本当に削除しますか？" }, class: "btn btn-danger" %>
+        <%= link_to "削除する", post_path(@post), method: :delete, data: { confirm: "本当に削除しますか？" }, class: "btn btn-danger" %>
       </div>
     <% end %>
 
@@ -78,7 +78,10 @@
           </div>
           <% if comment.user == current_user %>
             <div class="card-footer py-1 text-end">
-              <%= link_to '削除', post_comment_path(@post, comment), method: :delete, data: { "turbo-method": :delete, "turbo-confirm": '本当に削除しますか？' }, class: 'btn btn-sm btn-outline-danger' %>
+            <%= button_to '削除', post_comment_path(@post, comment),
+              method: :delete,
+              data: { confirm: "本当に削除しますか？" },
+                class: 'btn btn-sm btn-outline-danger' %>                             
             </div>
           <% end %>
         </div>
