@@ -104,7 +104,7 @@
                           <%= link_to edit_post_path(post), class: "btn btn-outline-primary btn-sm me-2" do %>
                             <i class="fas fa-edit me-1"></i>編集
                           <% end %>
-                          <%= link_to post_path(post), method: :delete, data: { "turbo-method": :delete, "turbo-confirm": "本当に削除しますか？" }, class: "btn btn-outline-danger btn-sm" do %>
+                          <%= link_to post_path(post), method: :delete, data: { confirm: "本当に削除しますか？" }, class: "btn btn-outline-danger btn-sm" do %>
                             <i class="fas fa-trash me-1"></i>削除
                           <% end %>
                         </div>
