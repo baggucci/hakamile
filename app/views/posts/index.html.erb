@@ -1,6 +1,21 @@
-<!-- app/views/posts/index.html.erb -->
 <div class="container mt-5">
-  <!-- ヘッダーセクション -->
+  
+  <%# --- フラッシュメッセージ --- %>
+  <% if flash.now[:alert] %>
+    <div class="alert alert-danger alert-dismissible fade show mb-4" role="alert">
+      <%= flash.now[:alert] %>
+      <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+  <% end %>
+
+  <% if flash[:notice] %>
+    <div class="alert alert-success alert-dismissible fade show mb-4" role="alert">
+      <%= flash[:notice] %>
+      <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+  <% end %>
+
+  <%# --- ヘッダーセクション --- %>
   <section class="posts-header mb-5">
     <div class="row align-items-center">
       <div class="col-lg-8">
@@ -10,7 +25,7 @@
         <p class="lead text-muted">
           みんなの心に残る墓参り体験を共有しています
           <% if @posts.present? %>
-            <span class="posts-count">（<%= @posts.count %>件の投稿）</span>
+            <span class="posts-count">（<%= @posts.total_count %>件の投稿）</span>
           <% end %>
         </p>
       </div>
@@ -22,97 +37,105 @@
     </div>
   </section>
 
-  <!-- 投稿一覧 -->
+  <%# --- 投稿一覧 --- %>
   <section class="posts-grid">
     <% if @posts.present? %>
       <div class="row g-4">
         <% @posts.each do |post| %>
           <div class="col-lg-6">
-            <%= link_to post_path(post), class: "text-decoration-none" do %>
-              <article class="post-card card border-0 shadow card-hover h-100">
-                <div class="card-body p-4">
-                  <!-- 投稿ヘッダー -->
-                  <div class="post-header mb-3">
-                    <h3 class="post-title fw-bold text-primary-custom mb-2">
-                      <%= post.title %>
-                    </h3>
-                    
-                    <!-- 墓所情報 -->
-                    <div class="grave-info mb-2">
-                      <span class="grave-link text-gold">
-                        <i class="fas fa-monument me-1"></i>
-                        <%= post.grave&.name || "墓所情報なし" %>
-                      </span>
-                      <% if post.grave&.prefecture %>
-                        <span class="prefecture-badge ms-2">
-                          <i class="fas fa-map-marker-alt me-1 text-muted"></i>
-                          <%= post.grave.prefecture %>
-                        </span>
+
+            <%# --- カードデザイン開始 --- %>
+            <div class="card border-0 shadow h-100">
+            <%# 0. 写真（3枚まで）を冒頭に追加  %>
+              <% if post.images.attached? %>
+                <div class="row g-1 px-2 pt-2">
+                  <%# 3枚だけ取り出して表示 %>
+                  <% post.images.first(3).each do |image| %>
+                    <div class="col-4">
+                      <%= link_to post do %>
+                        <%# variantを使ってリサイズ（処理が重い場合は variant ではなく直接表示に変えてください） %>
+                        <% if image.variable? %>
+                          <%= image_tag image.variant(resize_to_fill: [200, 200]), class: 'img-fluid rounded', style: "width: 100%; aspect-ratio: 1/1; object-fit: cover;" %>
+                        <% else %>
+                          <%= image_tag image, class: 'img-fluid rounded', style: "width: 100%; aspect-ratio: 1/1; object-fit: cover;" %>
+                        <% end %>
                       <% end %>
                     </div>
-                  </div>
+                  <% end %>
+                </div>
+              <% end %>
+              
+              <div class="card-body">
+                
+                <%# 1. 墓所名 %>
+                <p class="text-muted small mb-1">
+                  <i class="fas fa-monument me-1"></i>
+                  <%= link_to "#{post.grave&.name || '不明な場所'}のお墓", post, class: 'text-muted text-decoration-none' %>
+                </p>
 
-                  <!-- 投稿内容プレビュー -->
-                  <div class="post-content mb-3">
-                    <p class="post-excerpt text-dark mb-0">
-                      <%= truncate(post.body, length: 120) %>
-                    </p>
-                  </div>
+                <%# 2. Postのタイトル（＋非公開マーク） %>
+                <h5 class="fw-bold">
+                  <%= link_to post.title, post, class: 'text-dark text-decoration-none' %>
 
-                  <!-- 投稿メタ情報 -->
-                  <div class="post-meta">
-                    <div class="d-flex align-items-center justify-content-between">
-                      <!-- ユーザー情報 -->
-                      <div class="user-info d-flex align-items-center">
-                        <div class="user-avatar me-2">
-                          <i class="fas fa-user-circle fa-2x text-muted"></i>
-                        </div>
-                        <div class="user-details">
-                          <p class="user-name mb-0 fw-medium text-primary-custom">
-                            <%= post.user&.name || post.user&.email&.split('@')&.first || "ユーザー" %>
-                          </p>
-                          <p class="post-date mb-0 small text-muted">
-                            <i class="fas fa-clock me-1"></i>
-                            <%= time_ago_in_words(post.created_at) %>前
-                          </p>
-                        </div>
-                      </div>
+                  <% if post.unpublished? %>
+                    <span class="badge bg-secondary ms-2" style="font-size: 0.6em; vertical-align: middle;">
+                      <i class="fas fa-lock me-1"></i>非公開
+                    </span>
+                  <% end %>
+                </h5>
+                
+                <%# 3. 投稿本文（60字で省略） %>
+                <p class="card-text mt-2">
+                  <%= truncate(post.body, length: 60) %>
+                  <% if post.body.length > 60 %>
+                    <%= link_to 'もっとみる', post, class: 'text-muted small' %>
+                  <% end %>
+                </p>
 
-                      <!-- エンゲージメント情報 -->
-                      <div class="engagement-info">
-                        <div class="d-flex align-items-center gap-3 small text-muted">
-                          <span class="engagement-item">
-                            <i class="fas fa-heart me-1"></i>
-                            <%= post.respond_to?(:likes_count) ? (post.likes_count || 0) : rand(0..25) %>
-                          </span>
-                          <span class="engagement-item">
-                            <i class="fas fa-comment me-1"></i>
-                            <%= post.respond_to?(:comments_count) ? (post.comments_count || 0) : rand(0..12) %>
-                          </span>
-                          <span class="read-more text-gold">
-                            <i class="fas fa-chevron-right"></i>
-                          </span>
-                        </div>
-                      </div>
-                    </div>
+                <%# 4. ユーザー名と日付 %>
+                <div class="d-flex align-items-center mt-3 border-top pt-3">
+                  <i class="fas fa-user-circle fa-2x text-muted me-2"></i>
+                  <span class="text-muted small"><%= post.user&.name || 'ユーザー' %></span>
+                  
+                  <span class="ms-auto text-muted small">
+                    <%= time_ago_in_words(post.created_at) %>前
+                  </span>
+                </div>
+
+                <%# 5. エンゲージメント情報（いいね・コメント数） %>
+                <div class="engagement-info mt-2">
+                  <div class="d-flex align-items-center gap-3 small text-muted">
+                    <span class="engagement-item">
+                      <i class="fas fa-heart me-1"></i>
+                      <%= post.respond_to?(:likes_count) ? (post.likes_count || 0) : 0 %>
+                    </span>
+                    <span class="engagement-item">
+                      <i class="fas fa-comment me-1"></i>
+                      <%= post.respond_to?(:comments_count) ? (post.comments_count || 0) : 0 %>
+                    </span>
+                    <span class="read-more text-gold ms-auto">
+                      <%= link_to post, class: "text-decoration-none text-gold" do %>
+                        <i class="fas fa-chevron-right"></i>
+                      <% end %>
+                    </span>
                   </div>
                 </div>
-                
-              </article>
-            <% end %>
-          </div>
+
+              </div> 
+            </div> 
+            <%# --- カードデザイン終了 --- %>
+
+          </div> 
         <% end %>
       </div>
 
-      <!-- ページネーション -->
-      <% if @posts.respond_to?(:total_pages) %>
-        <div class="pagination-wrapper text-center mt-5">
-          <%= paginate @posts, theme: 'twitter-bootstrap-4' %>
-        </div>
-      <% end %>
+      <%# --- ページネーション --- %>
+      <div class="mt-5 d-flex justify-content-center">
+        <%= paginate @posts %>
+      </div>
 
     <% else %>
-      <!-- 空の状態 -->
+      <%# --- 空の状態（投稿がない場合） --- %>
       <div class="empty-state text-center py-5">
         <div class="empty-icon mb-4">
           <i class="fas fa-pen-nib fa-5x text-muted"></i>
@@ -127,20 +150,6 @@
         <% end %>
       </div>
     <% end %>
+
   </section>
-
-  <!-- Flash Messages -->
-  <% if flash.now[:alert] %>
-    <div class="alert alert-danger alert-dismissible fade show mt-4" role="alert">
-      <%= flash.now[:alert] %>
-      <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-    </div>
-  <% end %>
-
-  <% if flash[:notice] %>
-    <div class="alert alert-success alert-dismissible fade show mt-4" role="alert">
-      <%= flash[:notice] %>
-      <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-    </div>
-  <% end %>
 </div>

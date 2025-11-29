@@ -10,7 +10,7 @@ class Post < ApplicationRecord
   validates :body, presence: true
 
  # ===== Enums =====
-  # ステータス (0:公開, 1:非公開, 2:審査中)
+  # ステータス (0:公開, 1:非公開, )
   enum status: { published: 0, unpublished: 1}
 
   # ===== Methods =====
