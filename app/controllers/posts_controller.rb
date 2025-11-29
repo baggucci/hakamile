@@ -5,8 +5,17 @@ class PostsController < ApplicationController
   before_action :authenticate_user!
 
   def index
-        # 公開されている投稿を新しい順にすべて取得
-        @posts = Post.where(status: :published).order(created_at: :desc)
+    if user_signed_in?
+      @posts = Post.includes(:user, :grave)
+                   .where("status = ? OR user_id = ?", Post.statuses[:published], current_user.id)
+                   .order(created_at: :desc)
+                   .page(params[:page]).per(5)  
+    else  
+      @posts = Post.published
+                   .includes(:user, :grave)
+                   .order(created_at: :desc)
+                   .page(params[:page]).per(5)  
+    end
   end
 
   def show
