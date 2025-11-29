@@ -11,7 +11,7 @@ class CommentsController < ApplicationController
       else
         # 失敗した場合、投稿詳細ページの情報を再度取得して表示
         @comments = @post.comments.includes(:user)
-        flash.now[:alert] = 'コメントの投稿に失敗しました。'
+        flash.now[:alert] = 'コメントを入力してください'
         render 'posts/show'
       end
     end
