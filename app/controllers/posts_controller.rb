@@ -1,3 +1,4 @@
+
 class PostsController < ApplicationController
   # edit, update, destroyアクションの前に、対象の投稿データを取得し、本人確認を行う
   before_action :set_post, only: [:show, :edit, :update, :destroy]
@@ -5,22 +6,12 @@ class PostsController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    if user_signed_in?
-      @posts = Post.includes(:user, :grave)
-                   .where("status = ? OR user_id = ?", Post.statuses[:published], current_user.id)
-                   .order(created_at: :desc)
-                   .page(params[:page]).per(5)  
-    else  
-      @posts = Post.published
-                   .includes(:user, :grave)
-                   .order(created_at: :desc)
-                   .page(params[:page]).per(5)  
-    end
+    @posts = Post.visible_for(current_user, params[:page])
   end
 
   def show
-    @post = Post.find(params[:id])
-    @comment = Comment.new  
+    # @post は before_action で設定されているので重複取得を削除
+    @comment = Comment.new
   end
 
   def new
@@ -29,25 +20,23 @@ class PostsController < ApplicationController
       @post = Post.new(grave: @grave)
     else
       @post = Post.new
-      @graves = Grave.all 
-
+      @graves = Grave.all
     end
   end
-  
+
   def edit
         # @postはbefore_actionで設定済み
   end
 
   def create
-    @post = current_user.posts.build(post_params)
-    if @post.save
+    begin
+      @post = Post.create_for_user(current_user, post_params.to_h)
       redirect_to grave_path(@post.grave), notice: '墓参日記を投稿しました。'
-    else
+    rescue ActiveRecord::RecordInvalid
       if post_params[:grave_id].present?
-        @grave = Grave.find_by(id: post_params[:grave_id])  # findではなくfind_by
+        @grave = Grave.find_by(id: post_params[:grave_id])
       end
-      @graves = Grave.all  # newで使っているなら忘れずに
-  
+      @graves = Grave.all
       flash.now[:alert] = '投稿に失敗しました。'
       render :new, status: :unprocessable_entity
     end
@@ -55,17 +44,7 @@ class PostsController < ApplicationController
 
    # PATCH /posts/:id
    def update
-    @post = Post.find(params[:id])
-
-    # 削除ロジックがこの通りになっているか確認
-    if params[:delete_image_ids]
-      params[:delete_image_ids].each do |image_id|
-        image = @post.images.find_by(id: image_id)
-        image.purge if image
-      end
-    end
-
-    if @post.update(post_params)
+    if @post.update_with_deleted_images(post_params.to_h, params[:delete_image_ids])
       redirect_to @post, notice: '投稿が更新されました。'
     else
       render :edit, status: :unprocessable_entity
@@ -89,7 +68,7 @@ class PostsController < ApplicationController
   def post_params
     params.require(:post).permit(:title, :body, :grave_id, :status, images:[])
   end
-  
+
   # 対象の投稿データを取得する
   def set_post
     @post = Post.find(params[:id])

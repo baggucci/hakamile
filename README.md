@@ -28,11 +28,10 @@
 後ほど作成予定
 ​
 ## 開発環境
-- OS：Linux(CentOS)
+- OS：Amazon Linux 2
 - 言語：HTML,CSS,JavaScript,Ruby,SQL
 - フレームワーク：Ruby on Rails
-- JSライブラリ：jQuery
-- IDE：Cloud9
+- エディタ： Visual Studio Code (Remote - SSH)
 ​
 ## 使用素材
 著作権を考慮し、架空のデータを扱う予定です。
